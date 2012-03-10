@@ -1,0 +1,58 @@
+{% import 'imports/forms.html' as forms %}
+{% import 'imports/global.html' as global%}
+
+{% call global.html() %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block page_title %}{% endblock %}</title>
+  <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}" />
+  <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/core.css')}}" />
+
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery-1.7.1.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='fb/jquery.fancybox.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.upload-1.0.2.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='fb/helpers/jquery.fancybox-buttons.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='fb/helpers/jquery.fancybox-thumbs.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='bootstrap/js/bootstrap.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='bootstrap/js/bootstrap-typeahead.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='hc/js/highcharts.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='hc/js/modules/exporting.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='bootstrap/js/bootstrap-datepicker.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/mine/core.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/mine/obj.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/mine/helper.js')}}"></script>
+</head>
+<body>
+{% call global.bs_top_bar("DHouse") %}
+  <ul class="nav">
+    <li {% if index %}class="active" {% endif %}>
+      {{ forms.bs_link('Index', icolor="black", itype="home", href=url_for('core.index'))}} 
+    </li>
+    <li {% if member_center%}class="active" {% endif %}>
+      {{ forms.bs_link('Member Center', icolor="black", itype="user", href=url_for('member.index'))}} 
+    </li>
+  </ul>
+  <div class="navbar-search pull-left">
+    {{forms.input('','global_search',type='search', other='placeholder="Search"')}}
+  </div>
+  <ul id="top-account-info" class="nav pull-right">
+  </ul>
+  <script>
+    $(document).ready(function() {
+      var url = '{{url_for("core.account")}}';
+      {% if login %}
+      url += '?login=true';
+      {% elif register %}
+      url += '?register=true';
+      {% endif %}
+      $('ul#top-account-info').load(url)
+    });
+  </script>
+{% endcall %}
+<div id="main-container" class="container">
+  {%block container%} 
+  {%endblock%}
+</div>
+</body>
+{% endcall %}

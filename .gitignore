@@ -1,0 +1,6 @@
+data
+*.pyc
+*.db
+*DS_Store
+*.png
+*.swp

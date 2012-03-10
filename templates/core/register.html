@@ -1,0 +1,28 @@
+{% extends "core/login.html" %}
+{% block page_title %}Register{% endblock %}
+{% block container %}
+<div id="page">
+<div id='register'>
+  {% if error %}
+  <div id="register_error" class="alert alert-error alert-block">
+    <a class="close" href="#">x</a>
+    <p><strong> {{ error }} </strong></p>
+  </div>
+  {% endif %}
+  <form action="{{ url_for('core.register')}}" method="post" id="registerform">
+    <label>Username:</label>
+    <input type="text" id="id_username" name="username"/>
+    <label>Password:</label>
+    <input type="password" id="id_password" name="password"/>
+    <label>Repeat Password:</label>
+    <input type="password" id="id_passwordr" name="passwordr"/>
+    <input type="submit" class='btn primary right' value="Register"/>
+    <div class="clear"></div>
+  </form>
+</div>
+</div>
+<script>
+$(document).ready(function() {
+});
+</script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block page_title %}Sign in{% endblock %}
+{% block additional_css %}
+<style>
+</style>
+{% endblock %}
+
+{% block container %}
+<div id="page">
+<div id='login'>
+  {% if error %}
+  <div id="login_error" class="alert alert-error alert-block">
+    <a class="close" href="#" data-dismiss="alert">x</a>
+    <p><strong> {{ error }} </strong></p>
+  </div>
+  {% endif %}
+  <form action="{{url_for('core.login_page')}}" method="post" id="loginform">
+    <label>Username: 
+    </label>
+    <input type="text" id="id_username" name="username"/>
+    <label>Password: 
+    </label>
+    <input type="password" id="id_password" name="password"/>
+    <input type="submit" class='btn primary right' value="Sign In"/>
+    {% if next %}
+    <input type='hidden' name='next' value='{{next}}' />
+    {% endif %}
+    <div class="clear"></div>
+  </form>
+</div>
+</div>
+<script>
+$(document).ready(function() {
+  function focus() {
+    $("#id_username").focus();
+  }
+  focus();
+{% if error %}
+{% endif %}
+});
+</script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% import 'imports/forms.html' as forms %}
+<div id="tooltip" style="position: fixed; right: -65px; top: 65px; width: 150px; border: solid #D2D2D2 1px; border-radius: 2px 0 0 2px; box-shadow: rgba(0, 0, 0, 0.0976563) 0px 0px 5px 0px;background-color:whiteSmoke;" class="well">
+  <h6>Chart Navigate</h6>
+  <hr/>
+  {% call forms.bs_accordion('chart-tooltip') %}
+    {% call forms.bs_accordion_item('chart-tooltip', 'General-Charts', 'General', in=True) %}
+    <ul>
+      <li class="chart-item"><a href="/analysis/overview.js">Overview</a></li>
+    </ul>
+    {% endcall %}
+    {% call forms.bs_accordion_item('chart-tooltip', 'Share-Charts', 'Share') %}
+    <ul>
+      <li class="chart-item"><a href="/analysis/dt-pie.js">Dessert Type</a></li>
+      <li class="chart-item"><a href="/analysis/dst-pie.js">Dessert</a></li>
+      <li class="chart-item"><a href="/analysis/gender-pie.js">Gender</a></li>
+      <li class="chart-item"><a href="/analysis/age-pie.js">Age</a></li>
+      <li class="chart-item"><a href="/analysis/activate-pie.js">Activate</a></li>
+    </ul>
+    {% endcall %}
+  {% endcall %}
+</div>
+<script>
+  $(document).ready(function() {
+      $("li.chart-item a").click(function(e){
+        e.preventDefault()
+        var url = $(this).attr('href')
+        $.getScript(url)
+      })
+      $.getScript('/analysis/overview.js')
+      $("#tooltip").hover(function() {
+        $(this).animate({ right: '+=60'}, 300)
+      }, function() {
+        $(this).animate({ right: '-=60'}, 300)
+      })
+  })
+</script>

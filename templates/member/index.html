@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block page_title %}Member Center{% endblock %}
+
+{% block container%}
+<div id="main-content" class="well container">
+  <div id="user-pills">
+    {% call forms.bs_pills() %}
+      {{forms.bs_pills_item("Account", class="pill active", other='id="member-account-pill"')}}
+      {{forms.bs_pills_item("Orders", class="pill", other='id="member-order-pill"')}}
+    {% endcall %}
+  </div>
+  <div id="member-account">
+  </div>
+  <div id="member-orders">
+  </div>
+</div>
+<script>
+$(document).ready(function() {
+
+$("#member-account-pill").click(function(data) {
+  if (!$(this).hasClass("active")) {
+    $(this).addClass("active")
+    $("#member-order-pill").removeClass("active")
+    $("#member-orders").fadeOut(function() {$("#member-account").fadeIn()})
+  }
+})
+
+$("#member-order-pill").click(function(data) {
+  if (!$(this).hasClass("active")) {
+    $(this).addClass("active")
+    $("#member-account-pill").removeClass("active")
+    $("#member-account").fadeOut(function() {$("#member-orders").fadeIn()})
+  }
+})
+
+$("#member-orders").hide()
+$("#member-account").load('{{url_for('member.account')}}')
+$("#member-orders").load('{{url_for('member.orders')}}')
+
+})
+</script>
+{% endblock %}
