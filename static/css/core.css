@@ -1,23 +1,9 @@
 body {
   background-image: url(../img/background/furley_bg.png);
-  background-attachment: fixed;
 }
+
 body {
   padding-top: 50px;
-}
-
-@media (max-width: 980px)  {
-  body {
-    padding-top: 0 !important;
-  }
-}
-
-.modal-backdrop {
-  z-index: 1000;
-}
-
-#fancybox-overlay {
-  background: #777 !important;
 }
 
 .left {
@@ -31,19 +17,9 @@ body {
 .clear {
   clear: both;
 }
-.navbar-search {
-  margin-top: 3px;
-}
 
-.sidebar-nav, .content {
-  margin-top: 15px;
-}
-
-.sidebar-nav {
-  padding: 9px 0;
-}
-.nav-header {
-  margin-bottom: 7px;
+#global-search {
+  margin: 0;
 }
 
 .content {
@@ -79,42 +55,8 @@ div.notif.top-success {
   border-color: #4D90F0;
 }
 
-/**---error---**/
-div#expired_error {
-  margin-top: 5px;
-}
-
-.popup label {
-  width: 100px;
-}
-
-/**--header--**/
-.brand {
-  font-weight: bold;
-  color: black !important;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 1);
-  -webkit-transition: all .2s linear;
-  -moz-transition: all .2s linear;
-  transition: all .2s linear;
-}
-
 
 /**--index--**/
-#login form, #register form {
-    padding:15px;
-    margin: 0;
-    margin-top: 20px;
-}
-
-#login .control-label, #register .control-label {
-  width: 120px;
-}
-#login .controls, #register .controls {
-  margin-left: 130px;
-}
-#login span.help-inline, #register span.help-inline {
-}
-
 div#main-content {
   padding-top: 20px;
 }
@@ -124,46 +66,9 @@ div#main-content {
   height: 20px;
   margin-right: 5px;
 }
-/*
-div.navbar-inner {
-  background-image: -webkit-linear-gradient(top, rgba(221, 221, 221, 0.5), rgba(204, 204, 204, 0.5));
-  background-image: -o-linear-gradient(top, rgba(221, 221, 221, 0.5), rgba(204, 204, 204, 0.5));
-  background-image: -ms-linear-gradient(top, rgba(221, 221, 221, 0.5), rgba(204, 204, 204, 0.5));
-  background-image: -moz-linear-gradient(top, rgba(221, 221, 221, 0.5), rgba(204, 204, 204, 0.5));
-  background-image: linear-gradient(top, rgba(221, 221, 221, 0.5), rgba(204, 204, 204, 0.5));
-  background-color: rgba(0, 0, 0, 0);
-}
-  */
-
-
-div.navbar-inner {
-  background-image: -webkit-linear-gradient(top, rgba(221, 156, 0, 0.5), rgba(204, 156, 0, 0.5));
-  background-image: -o-linear-gradient(top, rgba(221, 156, 0, 0.5), rgba(204, 156, 0, 0.5));
-  background-image: -ms-linear-gradient(top, rgba(221, 156, 0, 0.5), rgba(204, 156, 0, 0.5));
-  background-image: -moz-linear-gradient(top, rgba(221, 156, 0, 0.5), rgba(204, 156, 0, 0.5));
-  background-image: linear-gradient(top, rgba(221, 156, 0, 0.5), rgba(204, 156, 0, 0.5));
-  background-color: rgba(0, 0, 0, 0);
-}
-
-div.navbar .nav > li > a {
-  color: #666;
-}
-div.navbar .nav > li > a:hover {
-  color: black;
-}
-div.navbar .nav .active > a, div.navbar .nav .active > a:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  color: black;
-}
 
 span.item-img {
   display: table-cell;
-}
-
-.well {
-  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.1)
 }
 
 /* datepicker */
