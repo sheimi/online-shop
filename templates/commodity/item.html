@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% import 'imports/forms.html' as forms %}
+
+{% macro com_info(blank1, blank2, class2)%}
+<li class="row">
+  <span class="item-label span2">{{blank1}} : </span>
+  <span class="{{class2}} span3"><b>{{blank2}}</b></span>
+</li>
+{% endmacro %}
+
+
+{% block page_title %}ADS{% endblock %}
+
+{% block container%}
+<div class="well container">
+  <div class="row commodity-info">
+    {{ forms.bs_img(url_for('static', filename='img/commodity/'+commodity.img_name), class="span5") }}
+    <ul class="span5 offset1 info">
+      {{ com_info("Commodity ID", "#"+commodity.id|string, "item-id")}}
+      {{ com_info("Commodity Name", commodity.name, "item-name")}}
+      {{ com_info("Commodity Price", "$"+commodity.price|string, "item-price blue")}}
+      {{ com_info("Descriptions", "$"+commodity.des, "item-price")}}
+      <li class="row">
+      {{ forms.bs_btn("Add To Cart", btype="success", class="span2", icolor="white", itype="shopping-cart", other="")}}
+      {{ forms.bs_btn("Buy It Now", btype="info", class="span2", icolor="white", itype="leaf", other="")}}
+      </li>
+    </ul> 
+  </div>
+  <hr/>
+  <div class="forum">
+  </div>
+  <div>
+  </div>
+</div>
+<script>
+$(document).ready(function() {
+    $(".forum").hide().load('{{url_for('commodity.item_comments', item_id=commodity.id)}}').fadeIn()
+
+})
+</script>
+{% endblock %}

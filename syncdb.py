@@ -20,6 +20,12 @@ def create_db():
 
     OrderItem.drop_table()
     OrderItem.create_table()
+    
+    CommodityImage.drop_table()
+    CommodityImage.create_table()
+
+    CommodityComment.drop_table()
+    CommodityComment.create_table()
 
 def init_db():
     #init user
@@ -45,7 +51,11 @@ def init_db():
     #init order
     order = UserOrder.create(user=user)
     oi = OrderItem.create(order=order, commodity=co, num=10, price=10)
-    
+
+    ci = CommodityImage.create(name='13569b64-b9e3-4c3a-8a1d-5f794a723d8c.png', commodity=co)
+
+    for x in range(0, 10):
+        CommodityComment.create(user=user, commodity=co)
 
 if __name__ == '__main__':
     create_db()

@@ -18,8 +18,9 @@ body {
   clear: both;
 }
 
-#global-search {
-  margin: 0;
+/**--colors---**/
+.blue {
+  color: blue;
 }
 
 .content {
@@ -61,11 +62,8 @@ div#main-content {
   padding-top: 20px;
 }
 
-.avatar {
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
-}
+.avatar {width: 20px; height: 20px; position: absolute;}
+#account-name { margin-left: 25px;}
 
 span.item-img {
   display: table-cell;
@@ -233,3 +231,56 @@ span.item-img {
   width: 270px;
 }
 
+/**items**/
+.commodity-info li{
+  font-size: 16px;
+  padding: 10px 0;
+}
+.commodity-info .info{
+  padding: 20px 0;
+}
+.forum .comments {
+  margin-top: 30px;
+}
+.comment-uesr-info {
+  padding: 10px;
+}
+.add-comment {
+  margin-top: 20px;
+}
+/*rating*/
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: left;
+  font-size: 20px;
+  cursor: pointer;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating.rating-e > span:hover,
+.rating.rating-e > span:hover ~ span {
+  color: transparent;
+}
+.rating.rating-e > span:hover:before,
+.rating.rating-e > span:hover ~ span:before {
+  content: "\2605";
+  position: absolute;
+  left: 0;
+  color: gold;
+}
+
+.rating > span.choose,
+.rating > span.choose ~ span {
+  color: transparent;
+}
+.rating > span.choose:before,
+.rating > span.choose ~ span:before {
+  content: "\2605";
+  position: absolute;
+  left: 0;
+  color: gold;
+}

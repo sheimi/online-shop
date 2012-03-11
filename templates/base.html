@@ -8,17 +8,18 @@
   <title>{% block page_title %}{% endblock %}</title>
   <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/core.css')}}" />
   <!--<link type="text/css" rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}" />-->
+  <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/font-awesome.css')}}" />
   <link rel="stylesheet/less" href="{{url_for('static', filename='bootstrap/less/bootstrap.less')}}">
 
-  <script type="text/javascript" src="{{url_for('static', filename='js/jquery-1.7.1.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='js/less-1.2.2.min.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.upload-1.0.2.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='bootstrap/js/bootstrap.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='bootstrap/js/bootstrap-typeahead.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='bootstrap/js/bootstrap-datepicker.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='js/mine/core.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='js/mine/obj.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='js/mine/helper.js')}}"></script>
+  <script src="{{url_for('static', filename='js/jquery-1.7.1.js')}}"></script>
+  <script src="{{url_for('static', filename='js/less-1.2.2.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/jquery.upload-1.0.2.js')}}"></script>
+  <script src="{{url_for('static', filename='bootstrap/js/bootstrap.js')}}"></script>
+  <script src="{{url_for('static', filename='bootstrap/js/bootstrap-typeahead.js')}}"></script>
+  <script src="{{url_for('static', filename='bootstrap/js/bootstrap-datepicker.js')}}"></script>
+  <script src="{{url_for('static', filename='js/mine/core.js')}}"></script>
+  <script src="{{url_for('static', filename='js/mine/obj.js')}}"></script>
+  <script src="{{url_for('static', filename='js/mine/helper.js')}}"></script>
 </head>
 <body>
 {% call global.bs_top_bar("DHouse") %}
@@ -26,12 +27,9 @@
     <li {% if index %}class="active" {% endif %}>
       {{ forms.bs_link('Index', icolor="black", itype="home", href=url_for('core.index'))}} 
     </li>
-    <li {% if member_center%}class="active" {% endif %}>
-      {{ forms.bs_link('Member Center', icolor="black", itype="user", href=url_for('member.index'))}} 
-    </li>
   </ul>
   <div class="navbar-search pull-left">
-    {{forms.input('','global-search',type='search', other='placeholder="Search"')}}
+    {{forms.input('','global-search', class="search-query",type='search', other='placeholder="Search"')}}
   </div>
   <ul id="top-account-info" class="nav pull-right">
   </ul>
@@ -47,7 +45,7 @@
     });
   </script>
 {% endcall %}
-<div id="main-container" class="container">
+<div id="main-container" class="container-fluid">
   {%block container%} 
   {%endblock%}
 </div>

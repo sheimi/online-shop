@@ -1,0 +1,23 @@
+{% import 'imports/forms.html' as forms %}
+<div class="row">
+  <div class="comment-user span2">
+    {{forms.bs_img('/static/img/profile/'+comment.user.id|string+'.png', id="profile-img")}}
+    <div class="comment-uesr-info">
+      <span class="comment-label">User Name : </span>
+      <span class="comment-username">{{comment.user.username}}</span>
+    </div>
+  </div>
+  <div class="comment-comment span9">
+    <h6> Rating: </h6>
+    <p>
+      <div class="rating">
+        {% for i in range(1, 6)|reverse %}
+        <span {%if i == comment.rating %}class="choose" {% endif %}>☆</span>
+        {% endfor %}
+      </div>
+    </p>
+    <h6> Comment: </h6>
+    <p>{{comment.comment}}</p>
+  </div>
+</div>
+<hr/>

@@ -61,10 +61,12 @@ var order_item = new (rest_creator('orderitem'))()
 var commodity = new (rest_creator('commodity'))()
 var category = new (rest_creator('category'))()
 var member = new (rest_creator('member'))()
+var comment = new (rest_creator('commoditycomment'))()
 
 
 window.send_json = send_json
 window.user = user
 window.order = order
+window.comment = comment
 
 }(window);

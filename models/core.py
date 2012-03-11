@@ -1,6 +1,6 @@
 from shop import db
 from peewee import *
-from flask_peewee.auth import BaseUser
+from views.auth import BaseUser
 import datetime
 
 class Member(db.Model):

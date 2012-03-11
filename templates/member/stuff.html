@@ -55,7 +55,7 @@
 $(document).ready(function() {
 
 $('#img-uploader').change(function() {
-  $(this).upload('/member/profile/img', function(data){
+  $(this).upload('{{url_for("member.image_upload")}}', function(data){
     var img = $("#profile-img")
     var src = img.attr('src')
     src += '?' + new Date().getTime()
