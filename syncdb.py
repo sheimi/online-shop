@@ -1,40 +1,52 @@
 from shop import db
 from models import *
+from peewee import *
+
+def create_db():
+    User.drop_table()
+    User.create_table()
+
+    Member.drop_table()
+    Member.create_table()
+
+    Commodity.drop_table()
+    Commodity.create_table()
+
+    Category.drop_table()
+    Category.create_table()
+
+    UserOrder.drop_table()
+    UserOrder.create_table()
+
+    OrderItem.drop_table()
+    OrderItem.create_table()
 
 def init_db():
     #init user
-    user = User("sheimi", "zhang", True)
-    db.session.add(user)
-    db.session.commit()
+    user = User.create(username="sheimi", password="zhang", admin=True)
+    #user.set_password("zhang")
+    #user.save()
+    
+    user2 = User.create(username="sheimi2", password="zhang", admin=True)
+    #user2.set_password("zhang")
+    #user2.save()
 
     #init Member
-    member = Member("vip1")
-    db.session.add(member)
-    db.session.commit()
-    member.users.append(user)
-    db.session.commit()
+    member = Member.create(name="vip1")
+    user.membership = member
+    user.save()
 
     #init Commodity
-    cat = Category("c1")
-    db.session.add(cat)
-    co = Commodity("co1")
-    db.session.add(co)
-    db.session.commit()
+    cat = Category.create(name="c1")
+    co = Commodity.create(name="co1")
     co.category = cat
-    db.session.commit()
+    co.save()
 
     #init order
-    order = Order(user)
-    db.session.add(order)
-    db.session.commit()
-    oi = OrderItem(order, co, 10, 10)
-    db.session.add(oi)
-    db.session.commit()
-    
-
+    order = UserOrder.create(user=user)
+    oi = OrderItem.create(order=order, commodity=co, num=10, price=10)
     
 
 if __name__ == '__main__':
-    db.drop_all()
-    db.create_all()
+    create_db()
     init_db()

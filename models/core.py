@@ -1,33 +1,29 @@
 from shop import db
+from peewee import *
+from flask_peewee.auth import BaseUser
+import datetime
 
 class Member(db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=True)
-    discount = db.Column(db.Integer)
-
-    users = db.relationship('User', backref='membership', lazy='dynamic')
-
-    def __init__(self, name, discount=100):
-        self.name = name
-        self.discount = discount
+    name = CharField()
+    discount = IntegerField(default=100)
 
     def __repr__(self):
         return "<Member ('%s')>" % (self.name)
 
-class User(db.Model):
+class User(db.Model, BaseUser):
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
-    is_admin = db.Column(db.Boolean)
-    membership_id = db.Column(db.Integer, db.ForeignKey('member.id'))
+    username = CharField(null=False)
+    password = CharField(null=False)
+    email = CharField()
+    join_date = DateTimeField(default=datetime.datetime.now)
+    active = BooleanField(default=True)
+    admin = BooleanField(default=False)
+    age = IntegerField(default=0)
+    address = CharField(null=True)
+    gender = IntegerField(default=0) #0: secrete,  1: boy   2: girl
 
-
-    def __init__(self, username, password, is_admin=False):
-        self.username = username
-        self.password = password
-        self.is_admin = is_admin
+    membership = ForeignKeyField(Member, related_name='users', null=True)
 
     def __repr__(self):
         return "<User('%s')>" % (self.username)

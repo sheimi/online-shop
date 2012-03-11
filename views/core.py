@@ -25,13 +25,18 @@ def login():
     post = request.json
     username = post.get("username", None)
     password = post.get("password", None)
-    user = User.query.filter_by(username=username, password=password).first()
+    user = User.select().filter(username=username).execute().first()
     if user:
-        g.user = user
-        session["user_id"] = user.id
-        return jsonify(success=True)
+        if user.check_password(password):
+            session['logged_in'] = True
+            session['user_pk'] = user.get_pk()
+            session.permanent = True
+            g.user = user
+            return jsonify(success=True)
+        else:
+            return jsonify(success=False, msg="Wrong Password")
     else:
-        return jsonify(success=False, msg="Fail To Login")
+        return jsonify(success=False, msg="No such user")
         
 @core.route('/login/page', methods=['GET', 'POST'])
 def login_page():
@@ -42,20 +47,27 @@ def login_page():
         username = request.form.get("username", None)
         password = request.form.get("password", None)
         next_url = request.form.get("next", None)
-        user = User.query.filter_by(username=username, password=password).first()
+        user = User.select().filter(username=username).execute().first()
         if user:
-            g.user = user
-            session["user_id"] = user.id
-            if next_url:
-                return redirect(next_url) 
-            return redirect(url_for('core.index')) 
+            if user.check_password(password):
+                session['logged_in'] = True
+                session['user_pk'] = user.get_pk()
+                session.permanent = True
+                g.user = user
+                if next_url:
+                    return redirect(next_url) 
+                return redirect(url_for('core.index')) 
+            else:
+                return render_template('core/login.html', login=True, error='Password error')
         else:
-            return render_template('core/login.html', login=True, error='Fail To Login')
+            return render_template('core/login.html', login=True, error='No such user')
 
 
 @core.route('/logout', methods=['GET', 'POST'])
 def logout():
-    session.pop("user_id", None)
+    session.clear()
+    session.pop('logged_in', None)
+    g.user = None
     return redirect(url_for('core.index'))
 
 @core.route('/register', methods=['GET', 'POST'])
@@ -71,12 +83,11 @@ def register():
             return render_template('core/register.html', register=True, error='Can not be empty')
         if password != passwordr:
             return render_template('core/register.html', register=True, error='Password Not The Same')
-        user = User.query.filter_by(username=username).first()
-        if user:
+        if User.select().filter(username=username).exists():
             return render_template('core/register.html', register=True, error='User has exist')
-        user = User(username, password)
-        db.session.add(user)
-        db.session.commit()
+        user = User.create(username=username, password=password)
+        #user.set_password(password)
+        #user.save()
         session["user_id"] = user.id
         return redirect(url_for('core.index')) 
 

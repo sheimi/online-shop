@@ -4,23 +4,23 @@
     <form class="form-horizontal" id="account-form">
       <div class="span7 left"> 
         {% call forms.bs_ctrgroup('Username') %}
-          {{forms.input('username', 'overview-username', value=user.username, other='placeholder="User Name"')}}
+          {{forms.input('username', 'account-username', value=user.username, other='placeholder="User Name"')}}
         {% endcall %}
         {% call forms.bs_ctrgroup('Age') %}
-          {{forms.input('age', 'overview-age', value=user.age, other='placeholder="Age"')}}
+          {{forms.input('age', 'account-age', value=user.age, other='placeholder="Age"')}}
         {% endcall %}
         {% call forms.bs_ctrgroup('Gender') %}
-        <select name="gender" id="overview-gender">
+        <select name="gender" id="account-gender">
           <option value="0" {% if user.gender == 0 %}selected="selected"{%endif%}>Secrete</option>
           <option value="1" {% if user.gender == 1 %}selected="selected"{%endif%}>Boy</option>
           <option value="2" {% if user.gender == 2 %}selected="selected"{%endif%}>Girl</option>
         </select>
         {% endcall %}
         {% call forms.bs_ctrgroup('Email') %}
-          {{forms.input('email', 'overview-email', type="email", value=user.email, other='placeholder="Email"')}}
+          {{forms.input('email', 'account-email', type="email", value=user.email, other='placeholder="Email"')}}
         {% endcall %}
         {% call forms.bs_ctrgroup('Address') %}
-          {{forms.input('address', 'overview-address', value=user.address, other='placeholder="Address"')}}
+          {{forms.input('address', 'account-address', value=user.address, other='placeholder="Address"')}}
         {% endcall %}
       </div>
       <div id="profile" class="left span3">
@@ -29,20 +29,20 @@
       </div>
       <div class="form-actions clear">
       {{ forms.bs_btn('Change', btype='info', itype='pencil', 
-        other='id="overview-submit"')}}
+        other='id="account-submit"')}}
       </div>
     </form>
   {% endcall %}
   {% call forms.bs_accordion_item('user-accordion', 'user-password', 'Password') %}
     <form class="form-horizontal" id="passwd-form">
       {% call forms.bs_ctrgroup('Username') %}
-        {{forms.input('username', 'overview-username', value=user.username, other='placeholder="User Name" disabled')}}
+        {{forms.input('username', 'account-username', value=user.username, other='placeholder="User Name" disabled')}}
       {% endcall %}
       {% call forms.bs_ctrgroup('Password') %}
-        {{forms.input('password', 'psw-1', other='placeholder="Password"')}}
+        {{forms.input('password', 'psw-1', type="password", other='placeholder="Password"')}}
       {% endcall %}
       {% call forms.bs_ctrgroup('Repeat') %}
-        {{forms.input('password', 'psw-2', other='placeholder="Repeat Password"')}}
+        {{forms.input('password', 'psw-2', type="password", other='placeholder="Repeat Password"')}}
       {% endcall %}
       <div class="form-actions">
       {{ forms.bs_btn('Change', btype='info', itype='pencil', 
@@ -63,15 +63,20 @@ $('#img-uploader').change(function() {
   }, 'html')
 })
 
-$("#overview-submit").click(function() {
+$("#account-submit").click(function() {
   var data = {
-    username : $("#overview-username").val(),
-    age : $("#overview-age").val(),
-    gender: $("#overview-gender").val(),
-    email: $("#overview-email").val(),
-    address: $("#overview-address").val()
+    username : $("#account-username").val(),
+    age : $("#account-age").val(),
+    gender: $("#account-gender").val(),
+    email: $("#account-email").val(),
+    address: $("#account-address").val()
   }
-  user.update({{user.id}}, data)
+  user.update({{user.id}}, data).done(function(data){
+    success.top_message("Account Information Update Success")
+  }).fail(function() {
+    error.top_message("Account Information Update Fail")
+  })
+  
 })
 $("#psw-submit").click(function() {
   var p1 = $("#psw-1").val()
@@ -87,7 +92,11 @@ $("#psw-submit").click(function() {
   var data = {
     password: p1 
   }
-  user.update({{user.id}}, data)
+  user.update({{user.id}}, data).done(function(data) {
+    success.top_message("Password Information Update Success")
+  }).fail(function() {
+    error.top_message("Password Information Update Fail")
+  })
 })
 
 })

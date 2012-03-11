@@ -6,8 +6,8 @@
     {{user.username}}
   </a>
   <ul class="dropdown-menu">
-    {% if user.is_admin %}
-    <li>{{ forms.bs_link('Admin', icolor="black", itype="cog", href=url_for('core.index'))}}</li>
+    {% if user.admin %}
+    <li>{{ forms.bs_link('Admin', icolor="black", itype="cog", href=url_for('admin.index'))}}</li>
     {% endif %}
     <li class="divider"></li>
     <li>{{ forms.bs_link('Logout', icolor="black", itype="eject", href=url_for('core.logout'))}}</li>
