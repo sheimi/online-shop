@@ -6,21 +6,6 @@ from models import *
 from datetime import datetime as dt
 from util.util import date2str
 
-@app.get('/ajax/cart')
-def user_cart():
-    if not request.user:
-        return ""
-    user = request.user  
-    orders = user.orders
-    order = [ x for x in orders if not x.is_complete and x.is_order]
-    if order:
-        order = order[0]
-    else:
-        order = Order(user.id)
-        order.add()
-    user.cart = order
-    return render('base/cart.html')(user=user, num=len(order.order_items))
-
 @app.get('/ajax/buy/<order_id:int>')
 def check_out(order_id):
     user = request.user
@@ -34,19 +19,6 @@ def check_out_post(order_id):
         return { "success": False}
     order.update(is_confirmed=True, confirm_date=date2str(dt.today()))
     return {"success": True}
-
-@app.post('/ajax/item/additem')
-def add_item():
-    json = request.json
-    try:
-        dessert = Dessert.get(json['dessert'])
-        dessert.num -= json['num']
-        dessert.update()
-        oi = OrderItem(**json) 
-        oi.add()
-    except:
-        return {"success" : False}
-    return {"success" : True}
 
 @app.post('/ajax/item/cnum/<item_id:int>')
 def change_num(item_id):

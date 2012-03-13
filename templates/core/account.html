@@ -15,6 +15,18 @@
     <li>{{ forms.bs_link('Logout', icolor="black", itype="eject", href=url_for('core.logout'))}}</li>
   </ul>
 </li>
+<script>
+  !function(window) {
+    window.refresh_cart = function() {
+      $('#cart').remove()
+      $.get('{{url_for("cart.cart_tool")}}').done(function(data) {$('body').append(data)})
+    }
+  }(window)
+  refresh_cart()
+  !function(user) {
+    user.id = {{user.id}}
+  }(user)
+</script>
 {% else %}
 {% if not register %}
 <li>{{ forms.bs_link('Register', icolor="black", itype="chevron-right", href=url_for('core.register'))}}</li>

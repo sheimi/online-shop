@@ -20,9 +20,16 @@
       {{ com_info("Commodity ID", "#"+commodity.id|string, "item-id")}}
       {{ com_info("Commodity Name", commodity.name, "item-name")}}
       {{ com_info("Commodity Price", "$"+commodity.price|string, "item-price blue")}}
+      {{ com_info("Average Rating", commodity.avg_rating(), "item-price")}}
       {{ com_info("Descriptions", "$"+commodity.des, "item-price")}}
       <li class="row">
-      {{ forms.bs_btn("Add To Cart", btype="success", class="span2", icolor="white", itype="shopping-cart", other="")}}
+        <span class="item-label span2">Number : </span>
+        <div class="span3">
+          {{ forms.input_num("num", "num-"+commodity.id|string, class="order-num", ph="Number") }}
+        </div>
+      </li>      
+      <li class="row">
+      {{ forms.bs_btn("Add To Cart", btype="success", class="span2", icolor="white", itype="shopping-cart", other='id="add-to-cart"')}}
       {{ forms.bs_btn("Buy It Now", btype="info", class="span2", icolor="white", itype="leaf", other="")}}
       </li>
     </ul> 
@@ -35,8 +42,28 @@
 </div>
 <script>
 $(document).ready(function() {
-    $(".forum").hide().load('{{url_for('commodity.item_comments', item_id=commodity.id)}}').fadeIn()
-
+  $(".forum").hide().load('{{url_for('commodity.item_comments', item_id=commodity.id)}}').fadeIn()
+  $("#add-to-cart").click(function() {
+    if (user.id == undefined) {
+      error.top_message("Please Login First")
+      return
+    }
+    num = $(".order-num").val()
+    if (num == "" || num == "0") {
+      error.top_message("Please Input The Number")
+      return
+    }
+    $(".order-num").val("")
+    var commit = {
+      num: parseInt(num),
+      order: order.id,
+      commodity: {{commodity.id}}
+    }
+    send_json({url:"{{url_for('cart.additem')}}", method: "POST", data: commit}).done(function() {
+      success.top_message("Item Has Add To Your Cart")
+      refresh_cart()
+    })
+  })
 })
 </script>
 {% endblock %}

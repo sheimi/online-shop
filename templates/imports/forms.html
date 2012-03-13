@@ -2,8 +2,8 @@
   <input type="{{type}}" value="{{ value|e }}" name="{{ name }}" id="{{id}}" class="{{class}}" {{other|safe}}>
 {% endmacro %}
 
-{% macro input_num(name, id, class='', value='', max='100', min='0', ph='Number') %}
-  <input type="number" value="{{ value|e }}" name="{{ name }}" id="{{id}}" class="{{class}}" placeholder="{{ph}}" max="{{max}}" min="{{min}}">
+{% macro input_num(name, id, class='', value='', max='100', min='0', ph='Number', other='') %}
+  <input type="number" value="{{ value|e }}" name="{{ name }}" id="{{id}}" class="{{class}}" placeholder="{{ph}}" max="{{max}}" min="{{min}}" {{other|safe}}>
 {% endmacro %}
 
 {% macro bs_control_group(label='', for='') %} 

@@ -22,6 +22,11 @@ class Commodity(db.Model):
     
     def __repr__(self):
         return "<Commodity ('%s')>" % (self.name)
+
+    def avg_rating(self):
+        ratings = [x.rating for x in self.comments]
+        avg_rating = sum(ratings) * 1.0 / len(ratings)
+        return round(avg_rating, 1)
     
 class CommodityImage(db.Model):
     

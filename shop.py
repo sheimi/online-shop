@@ -16,11 +16,13 @@ app.config.update(
 db = Database(app)
 
 def register_module():
-    from views import Admin, RestAPI, UserAuthentication, Auth, core, member, commodity 
+    from views import Admin, RestAPI, UserAuthentication, Auth, core, member, commodity, cart
     from models import User, Member, UserOrder, OrderItem, Category, Commodity, CommodityComment
+
     app.register_blueprint(member, url_prefix='/member')
     app.register_blueprint(core, url_prefix='/core')
     app.register_blueprint(commodity, url_prefix='/commodity')
+    app.register_blueprint(cart, url_prefix='/cart')
     auth = Auth(app, db)
     admin = Admin(app, auth)
     api = RestAPI(app, default_auth=UserAuthentication(auth))

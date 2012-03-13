@@ -68,5 +68,6 @@ window.send_json = send_json
 window.user = user
 window.order = order
 window.comment = comment
+window.order_item = order_item
 
 }(window);
