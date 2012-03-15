@@ -3,6 +3,14 @@ from peewee import *
 from datetime import datetime as dt
 from models.core import User, Address
 from models.commodity import Commodity
+from views.admin import ModelAdmin
+
+class OrderStatus(db.Model):
+    name = CharField(null=False)
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
 
 class UserOrder(db.Model):
 
@@ -20,10 +28,13 @@ class UserOrder(db.Model):
 
     user = ForeignKeyField(User, related_name='orders', null=True)
     address = ForeignKeyField(Address, related_name='orders', null=True) 
+    status = ForeignKeyField(OrderStatus, related_name='orders', default=1)
 
     def total_price(self):
         return sum([x.total_price() for x in self.items])
 
+    def __unicode__(self):
+        return "#%s" % (self.id)
 
 class OrderItem(db.Model):
     
@@ -35,3 +46,21 @@ class OrderItem(db.Model):
 
     def total_price(self):
         return self.num * self.price
+
+
+class UserOrderAdmin(ModelAdmin):
+    columns = ('id', 'user', 'status')
+
+class OrderItemAdmin(ModelAdmin):
+    columns = ('commodity', 'order')
+
+
+#register stuff
+def register_order(**regs):
+    regs['admin'].register(UserOrder, UserOrderAdmin)
+    regs['admin'].register(OrderItem, OrderItemAdmin)
+    
+    regs['api'].register(UserOrder)
+    regs['api'].register(OrderItem)
+
+

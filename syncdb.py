@@ -30,13 +30,23 @@ def create_db():
     Address.drop_table()
     Address.create_table()
 
+    OrderStatus.drop_table()
+    OrderStatus.create_table()
+
 def init_db():
+    #init status
+    s_init = OrderStatus.create(name="init")
+    s_confirmed = OrderStatus.create(name="confirmed")
+    s_sent = OrderStatus.create(name="sent")
+    s_complete = OrderStatus.create(name="complete")
+    s_canceled = OrderStatus.create(name="canceled")
+
     #init user
     user = User.create(username="sheimi", password="zhang", admin=True)
     #user.set_password("zhang")
     #user.save()
     
-    user2 = User.create(username="sheimi2", password="zhang", admin=True)
+    user2 = User.create(username="sheimi2", password="zhang")
     #user2.set_password("zhang")
     #user2.save()
 

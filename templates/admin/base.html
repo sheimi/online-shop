@@ -11,10 +11,13 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/core.css') }}">
  
   <script src="{{url_for('static', filename='js/jquery-1.7.1.js')}}"></script>
   <script src="{{url_for('static', filename='bootstrap/js/bootstrap.js')}}"></script>
   <script src="{{ url_for('static', filename='js/mine/admin.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/mine/core.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/mine/obj.js') }}"></script>
   {% block extra_script %}{% endblock %}
 </head>
 
@@ -46,6 +49,10 @@
           <h3>Navigation</h3>
           {% block sidebar %}
             <ul id="nav" class="nav nav-list">
+              <li class="nav-header">Manage Site</li>
+              <li {% if order_page %} class="active" {% endif %}><a href="{{url_for('admina.orders')}}">Orders</a></li>
+              <li {% if category_page %} class="active" {% endif %}><a href="{{url_for('admina.categories')}}">Categories</a></li>
+              <li class="nav-header">Manage Items</li>
               {% for iter_admin in model_admins %}
                 <li{% if model_admin == iter_admin %} class="active"{% endif %}><a href="{{ url_for(iter_admin.get_url_name('index')) }}">{{ iter_admin.get_admin_name()|fix_underscores }}</a></li>
               {% endfor %}
@@ -73,10 +80,6 @@
           {% block content %}{% endblock %}
         </div><!-- /content -->
       </div><!-- /row -->
-      <hr />
-      <footer>
-        <p>{% block footer %}Site administration{% endblock %}</p>
-      </footer>
   </div> <!-- /container-fluid -->
 </body>
 </html>

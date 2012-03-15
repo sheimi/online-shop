@@ -15,8 +15,10 @@ def admin_required(f):
 
     @wraps(f)
     def decoratored_function(*args, **kwargs):
-        if g.user and g.user.is_admin:
+        if g.user and g.user.admin:
             return f(*args, **kwargs)
+        if g.user:
+            abort(403)
         return redirect(url_for('core.login_page', next=request.url))
     
     return decoratored_function

@@ -1,0 +1,11 @@
+$(document).ready(function() {
+  $("#categories").jstree({
+    "themes" : {
+      "theme" : "apple"
+      , "icons" : false
+    }
+    , ui
+    , "plugins" : ["ui", "themes", "html_data", "dnd"]
+  }).bind("select_node.jstree", function (event, data) {
+  })
+})

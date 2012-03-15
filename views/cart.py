@@ -60,6 +60,7 @@ def confirm_order(order_id):
 @cart.route('/confirm/<int:order_id>/all')
 def confirm_all(order_id):
     order = get_object_or_404(UserOrder, id=order_id)
-    UserOrder.update(is_confirmed=True, status=1, confirm_date=dt.today()).where(id=order_id).execute()
+    status = get_object_or_404(OrderStatus, name="confirmed")
+    UserOrder.update(is_confirmed=True, status=status, confirm_date=dt.today()).where(id=order_id).execute()
     return render_template('cart/success.html', user=g.user, order=order)
 

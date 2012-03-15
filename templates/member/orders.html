@@ -1,11 +1,72 @@
 {% import 'imports/forms.html' as forms %}
 {% call forms.bs_accordion('order-accordion') %}
   {% for order in user.orders | reverse%}
-    {% call forms.bs_accordion_item('order-accordion', 'orderid'+order.id|string, 'Order No. : '+order.id|string, in=loop.first) %}
-      {% include "includes/order.html"%}
-      {% if not loop.last %}
-      <hr/>
-      {% endif %}
-    {% endcall %}
+    {% if order.status.id > 1 %}
+      {% call forms.bs_accordion_item('order-accordion', 'orderid'+order.id|string, 'Order No. : '+order.id|string) %}
+        <h4>Order No. : #{{order.id}}</h4>
+        <div class="operations">
+          {% if order.status.name == 'sent' %}
+          <hr/>
+            {{ forms.bs_btn("Recieved", btype="success", class="complete-order", itype="ok", other="data-id='"+order.id|string+"'") }}
+          {% elif order.status.name == 'confirmed' %}
+          <hr/>
+            {{ forms.bs_btn("Cancel", btype="danger", class="cancel-order", itype="trash", other="data-id='"+order.id|string+"'") }}
+          {% endif %}
+        </div>
+        <hr/>
+        <table cellspacing="0" class="table table-striped">
+          <thead>
+            <tr>
+              <th style="width: 40%;">Name</th>
+              <th style="width: 20%;">Price</th>
+              <th style="width: 20%;">Num</th>
+              <th style="width: 20%;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for oi in order.items%}
+            <tr>
+              <td>{{oi.commodity.name}}</td>
+              <td>{{oi.price}}</td>
+              <td>{{oi.num}}</td>
+              <td>{{oi.total_price()}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+              <td><h5>Status</h5></td>
+              <td>
+                <span class="label">{{order.status.name}}</span>
+              </td>
+              <td><h5>Total Price</h5></td>
+              <td><span class="label label-info">${{order.total_price()}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+        {% if not loop.last %}
+        <hr/>
+        {% endif %}
+      {% endcall %}
+    {% endif %}
   {% endfor %}
 {% endcall %}
+<script>
+$(document).ready(function() {
+  var date = new Date
+  date = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate()
+        + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+  $(".complete-order").click(function() {
+    var id = parseInt($(this).attr("data-id"))
+    var select = this
+    order.update(id, {is_complete:true, status: 4, complete_date: date}).done(function() {
+      $(select).parents(".operations").fadeOut()
+    })
+  })
+  $(".cancel-order").click(function() {
+    var id = parseInt($(this).attr("data-id"))
+    var select = this
+    order.update(id, {is_complete:true, status: 5, complete_date: date}).done(function() {
+      $(select).parents(".operations").fadeOut()
+    })
+  })
+})
+</script>

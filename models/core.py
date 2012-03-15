@@ -2,14 +2,15 @@ from shop import db
 from peewee import *
 from views.auth import BaseUser
 import datetime
+from views.admin import ModelAdmin
 
 class Member(db.Model):
 
     name = CharField()
     discount = IntegerField(default=100)
 
-    def __repr__(self):
-        return "<Member ('%s')>" % (self.name)
+    def __unicode__(self):
+        return "%s" % (self.name)
 
 class User(db.Model, BaseUser):
 
@@ -45,4 +46,23 @@ class Address(db.Model):
     phone = CharField(null=False)
 
     def __unicode__(self):
-        return "%s " % (self.user, self.address)
+        return "%s " % (self.user)
+
+class MemberAdmin(ModelAdmin):
+    columns = ('name', 'discount')
+
+class UserAdmin(ModelAdmin):
+    columns = ('username', 'active', 'membership')
+
+class AddressAdmin(ModelAdmin):
+    columns = ('user', 'address')
+
+def register_core(**regs):
+    regs['admin'].register(Address, AddressAdmin)
+    regs['admin'].register(User, UserAdmin)
+    regs['admin'].register(Member, MemberAdmin)
+    
+    regs['api'].register(Address)
+    regs['api'].register(User)
+    regs['api'].register(Member)
+

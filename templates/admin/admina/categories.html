@@ -1,0 +1,42 @@
+{% import 'imports/forms.html' as forms %}
+{% extends "admin/base.html" %}
+{% block content_title %}Orders{% endblock %} 
+{% block extra_script %}
+<link rel="stylesheet" href="{{ url_for('static', filename='jstree/themes/apple/style.css') }}">
+{% endblock %}
+{% block content_tagline %}{% endblock %}
+{% block breadcrumbs %}
+<li>
+  <span class="divider">/</span>
+  <a href="{{url_for('admina.categories')}}">Categories</a>
+</li>
+{% endblock %}
+{% block pre_content %}{% endblock %}
+{% block content %}
+<div class="row">
+  <div id="categories" class="span4 well" data-id="1">
+    <h4>Categories</h4>
+    <hr/>
+    <ul>
+      {% for item in root.children recursive%}
+        <li class="jstree-open" data-id="{{item.id}}">
+          <a href="#">{{item.name}}</a>
+          {% if item.children.count() > 0 %}
+          <ul>{{loop(item.children)}}</ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div id="commodities" class="span6 well" style="background: white">
+  </div>
+</div>
+<script src="{{url_for('static', filename='jstree/jquery.jstree.js')}}"></script>
+<script src="{{url_for('static', filename='js/mine/admin/categories.js')}}"></script>
+<script>
+$(document).ready(function() {
+    $("#commodities").load("{{url_for('admina.commodity_list')}}")
+})
+</script>
+{% endblock %}
+

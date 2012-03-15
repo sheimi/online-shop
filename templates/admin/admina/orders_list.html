@@ -1,0 +1,56 @@
+{% import 'imports/forms.html' as forms %}
+{% for order in orders|reverse %}
+<div class="outer-wrapper">
+  <div id="order-item-{{order.id}}" class="order-box {{order.status.name}}">
+    <h4>Order No. : #{{order.id}}&nbsp;&nbsp;&nbsp;&nbsp; User: {{order.user.username}}</h4>
+    <table cellspacing="0" class="table table-striped">
+      <thead>
+        <tr>
+          <th style="width: 30%;">Name</th>
+          <th style="width: 30%;">Price</th>
+          <th style="width: 20%;">Num</th>
+          <th style="width: 20%;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for oi in order.items%}
+        <tr>
+          <td>{{oi.commodity.name}}</td>
+          <td>{{oi.price}}</td>
+          <td>{{oi.num}}</td>
+          <td>{{oi.total_price()}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td><h5>Status</h5></td>
+          <td>
+            <span class="label">{{order.status.name}} 
+            </span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            {% if order.status.name == 'confirmed'%}
+              <a class="can_change" href="#" data-id="{{order.id}}">Change</a>
+            {% endif %}
+          </td>
+          <td><h5>Total Price</h5></td>
+          <td><span class="label label-info">${{order.total_price()}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  {% if not loop.last %}
+  <hr/>
+  {% endif %}
+</div>
+{% endfor %}
+<script>
+$(document).ready(function() {
+  $(".can_change").click(function(e) {
+    e.preventDefault()
+    var order_id = parseInt($(this).attr("data-id"))
+    var selected = this;
+    order.update(order_id, {status:3}).done(function() {
+      $(selected).parents(".outer-wrapper").fadeOut()
+    })
+  })
+})
+                </script>

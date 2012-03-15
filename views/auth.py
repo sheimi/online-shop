@@ -43,8 +43,18 @@ class Auth(object):
         return {'user': self.get_logged_in_user()}
     
     def get_user_model(self):
-        from models.core import User
+        class User(self.db.Model, BaseUser):
+            username = CharField()
+            password = CharField()
+            email = CharField()
+            active = BooleanField()
+            admin = BooleanField()
+
+            def __unicode__(self):
+                return self.username
+
         return User
+
     
     def get_model_admin(self, model_admin=None):
         if model_admin is None:

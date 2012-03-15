@@ -30,6 +30,8 @@
       <div class="form-actions clear">
       {{ forms.bs_btn('Change', btype='info', itype='pencil', 
         other='id="account-submit"')}}
+      {{ forms.bs_btn('Delete', btype='danger', itype='trash', 
+        other='id="account-delete"', class="offset1")}}
       </div>
     </form>
   {% endcall %}
@@ -76,8 +78,14 @@ $("#account-submit").click(function() {
   }).fail(function() {
     error.top_message("Account Information Update Fail")
   })
-  
 })
+
+$("#account-delete").click(function() {
+  user.delete({{user.id}}).done(function() {
+    location.href="{{url_for('core.logout')}}"
+  })
+})
+
 $("#psw-submit").click(function() {
   var p1 = $("#psw-1").val()
   var p2 = $("#psw-2").val()
@@ -98,6 +106,7 @@ $("#psw-submit").click(function() {
     error.top_message("Password Information Update Fail")
   })
 })
+
 
 })
 </script>

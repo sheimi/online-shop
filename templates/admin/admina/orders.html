@@ -1,0 +1,47 @@
+{% import 'imports/forms.html' as forms %}
+{% extends "admin/base.html" %}
+{% block content_title %}Orders{% endblock %} 
+{% block content_tagline %}{% endblock %}
+{% block breadcrumbs %}
+<li>
+  <span class="divider">/</span>
+  <a href="{{url_for('admina.orders')}}">Orders</a>
+</li>
+{% endblock %}
+{% block pre_content %}{% endblock %}
+{% block content %}
+<div id="main-content">
+  <div id="order-pills">
+    {% call forms.bs_pills() %}
+      {{forms.bs_pills_item("All", class="pill active", other='data-id="0"')}}
+      {% for status in status_all %}
+        {{forms.bs_pills_item(status.name, class="pill", other='data-id="'+status.id|string+'"')}}
+      {% endfor %}
+    {% endcall %}
+  </div>
+  <div id="all-orders">
+  </div>
+</div>
+<script>
+$(document).ready(function() {
+  $("#all-orders").load('{{url_for('admina.orders_list')}}')
+  $(".pill").click(function() {
+    $(".pill").each(function() {
+      $(this).removeClass("active")
+    })
+    $(this).addClass("active")
+    var id = $(this).attr("data-id")
+    if (id == '0') {
+      $("#all-orders").fadeOut(function() {
+        $(this).load('{{url_for('admina.orders_list')}}').fadeIn()
+      })
+    } else {
+      $("#all-orders").fadeOut(function() {
+        $(this).load('{{url_for('admina.orders_list')}}?status='+id).fadeIn()
+      })
+    }
+  })
+})
+</script>
+{% endblock %}
+

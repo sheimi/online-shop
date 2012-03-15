@@ -1,0 +1,20 @@
+<h4>Commodities</h4>
+<hr/>
+<table cellspacing="0" class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width: 40%;">Name</th>
+      <th style="width: 30%;">Price</th>
+      <th style="width: 30%;">Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for commodity in commodities %}
+    <tr class="jstree-draggable" data-id="{{commodity.id}}">
+      <td data-id="{{commodity.id}}">{{commodity.name}}</td>
+      <td data-id="{{commodity.id}}">{{commodity.price}}</td>
+      <td data-id="{{commodity.id}}">{{commodity.category.name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

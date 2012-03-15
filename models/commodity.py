@@ -1,16 +1,16 @@
-from shop import db
+from shop import db 
 from peewee import *
 from models.core import User
 import datetime
+from views.admin import ModelAdmin
 
 class Category(db.Model):
     
     name = CharField()
     parent = ForeignKeyField('self', related_name='children', null=True)
 
-    def __repr__(self):
-        return "<Category ('%s')>" % (self.name)
-
+    def __unicode__(self):
+        return "%s" % self.name
 
 class Commodity(db.Model):
 
@@ -20,8 +20,8 @@ class Commodity(db.Model):
 
     category = ForeignKeyField(Category, related_name='commodities', null=True)
     
-    def __repr__(self):
-        return "<Commodity ('%s')>" % (self.name)
+    def __unicode__(self):
+        return "%s" % self.name
 
     def avg_rating(self):
         ratings = [x.rating for x in self.comments]
@@ -42,3 +42,23 @@ class CommodityComment(db.Model):
     commodity = ForeignKeyField(Commodity, related_name='comments')
     date = DateTimeField(default=datetime.datetime.now)
     rating = IntegerField(default=3)
+
+class CategoryAdmin(ModelAdmin):
+    columns = ('name', 'parent')
+
+class CommodityAdmin(ModelAdmin):
+    columns = ('name', 'category')
+
+class CommodityCommentAdmin(ModelAdmin):
+    columns = ('user', 'commodity', 'comment')
+
+#register stuff
+def register_commodity(**regs):
+    regs['admin'].register(Category, CategoryAdmin)
+    regs['admin'].register(Commodity, CommodityAdmin)
+    regs['admin'].register(CommodityComment, CommodityCommentAdmin)
+    
+    regs['api'].register(Category)
+    regs['api'].register(Commodity)
+    regs['api'].register(CommodityComment)
+
