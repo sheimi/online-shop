@@ -17,7 +17,7 @@ db = Database(app)
 
 def register_module():
     from views import Admin, RestAPI, UserAuthentication, Auth, core, member, commodity, cart
-    from models import User, Member, UserOrder, OrderItem, Category, Commodity, CommodityComment
+    from models import User, Member, UserOrder, OrderItem, Category, Commodity, CommodityComment, Address
 
     app.register_blueprint(member, url_prefix='/member')
     app.register_blueprint(core, url_prefix='/core')
@@ -33,6 +33,7 @@ def register_module():
     admin.register(OrderItem)
     admin.register(Category)
     admin.register(Commodity)
+    admin.register(Address)
     admin.register(CommodityComment)
     admin.setup()
 
@@ -43,13 +44,17 @@ def register_module():
     api.register(Category)
     api.register(Commodity)
     api.register(CommodityComment)
+    api.register(Address)
     api.setup()
 
 @app.before_request
 def before_request():
     from models import User
     if 'user_pk' in session:
-        g.user = User.select().get(id=int(session['user_pk']))
+        try:
+            g.user = User.select().get(id=int(session['user_pk']))
+        except:
+            g.user = None
     else:
         g.user = None
 

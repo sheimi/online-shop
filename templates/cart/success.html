@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import 'imports/forms.html' as forms %}
+
+{% block page_title %}Success{% endblock %}
+
+{% block container%}
+<div class="well container">
+  <legend>Success</legend>
+  <div class="alert alert-success">
+    <h4 class="alert-heading">Success!</h4>
+    Congratulations! Your order has been rendered successfully, You can 
+    <a href="{{url_for('core.index')}}"> GO TO THE INDEX </a> or 
+    <a href="{{url_for('member.index')}}"> ENTER THE MEMBER CENTER </a> to check 
+    the status of your order
+  </div>
+</div>
+{% endblock %}

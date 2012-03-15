@@ -1,6 +1,9 @@
 $(document).ready(function() {
-  var login_url = '/core/login' 
-  var account_url = '/core/account'
+  var url = {
+    login: '/core/login',
+    account: '/core/account',
+    admin: '/admin'
+  }
   !function($) {
     var out = true;
     $('#login-toggle').click(function() {
@@ -22,7 +25,7 @@ $(document).ready(function() {
       return
     }
     send_json({
-      url: login_url,
+      url: url.login,
       method: 'POST',
       data : {
         username : username,
@@ -30,7 +33,11 @@ $(document).ready(function() {
       }
     }).done(function(data) {
       if (data.success) {
-        $('ul#top-account-info').load(account_url)
+        if (data.is_admin) {
+          window.location.href = url.admin
+        } else {
+          $('ul#top-account-info').load(url.account)
+        }
       } else {
         error.top_message(data.msg)
       }

@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import g, request, redirect, url_for
+from flask import g, request, redirect, url_for, abort
 
 def login_required(f):
 
@@ -21,3 +21,8 @@ def admin_required(f):
     
     return decoratored_function
 
+def get_object_or_404(model, **kwargs):
+    try:
+        return model.get(**kwargs)
+    except model.DoesNotExist:
+        abort(404)

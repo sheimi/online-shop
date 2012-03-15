@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% import 'imports/forms.html' as forms %}
+
+{% block page_title %}Check Your Cart{% endblock %}
+
+{% block container%}
+<div class="well container">
+  <legend>Comfirm Your Order</legend>
+  <div class="order-box">
+    <h4>Order No. : #{{order.id}}</h4>
+    <hr/>
+    <div class="row">
+      <div class="span9">
+        <div class="row-box">
+          <div class="row">
+            <div id="address-confirm" class="span3 confirm-item">
+              <h6>Your Address</h6>
+              <ul>
+                <li>{{order.address.name}}</li>
+                <li>{{order.address.address}}</li>
+                <li>{{order.address.zipcode}}</li>
+                <li>{{order.address.phone}}</li>
+              </ul>
+              <a href="{{url_for('cart.check_address', order_id=order.id)}}">Change</a>
+            </div>
+            <div id="payment-confirm" class="span3 confirm-item">
+              <h6>Your Payment</h6>
+              <ul>
+                <li>Cash On Delivery</li>
+              </ul>
+              <a href="{{url_for('cart.check_payment', order_id=order.id)}}">Change</a>
+            </div>
+          </div>
+        </div>
+        <div class="row-box">
+          <div class="row">
+            <div class="span4 confirm-item" id="order-confirm">
+              <h6>Your Order &nbsp;&nbsp; <i>total: ${{order.total_price()}}</i></h6>
+              {% for oi in order.items %}
+              <div class="row">
+                {{ forms.bs_img(url_for('static', filename='img/commodity/'+oi.commodity.imgs.execute().first().name), class="span1") }}
+                <div class="span2">
+                  <ul>
+                    <li>{{oi.commodity.name}}</li>
+                    <li>${{oi.price}} &times; {{oi.num}}</li>
+                  </ul>
+                </div>
+              </div>
+              {% endfor %}
+              <a href="{{url_for('cart.check_cart', order_id=order.id)}}">Change</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span3" id="order-confirm-outer">
+        <div class="order-confirm-box">
+          <div class="row">
+          {{ forms.bs_link("Confirm The Order", href=url_for('cart.confirm_all', order_id=order.id), class="span2 btn btn-warning", icolor="white", itype="shopping-cart", other='id="confirm-all"')}}
+          </div>
+          <div class="order-confirm-inner">
+            <ul>
+              {% for oi in order.items %}
+              <li>{{oi.total_price()}}</li>
+              {% endfor %}
+              <hr/>
+              <li>Total: &nbsp; &nbsp;${{order.total_price()}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

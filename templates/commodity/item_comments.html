@@ -1,94 +1,112 @@
 {% import 'imports/forms.html' as forms %}
-<h3>Comments: </h3>
-{% if user %}
-<div class="row add-comment">
-  <div class="rating rating-e span2">
-    <span data-index="5">☆</span>
-    <span data-index="4">☆</span>
-    <span data-index="3">☆</span>
-    <span data-index="2">☆</span>
-    <span data-index="1">☆</span>
-  </div>
-  <div class="span7">
-    {{ forms.input("comment", "comment-input", class='span7', type='text', other='placeholder="Leave A Comment"') }}
-  </div>
-  {{ forms.bs_btn("Add Comment", btype="success", class="span2", icolor="white", itype="comment", other='id="comment-submit"')}}
-</div>
-<script>
-  $(document).ready(function() {
-      //for star
-      var index = 0;
-      var choosed = "";
-      $('.rating.rating-e span').click(function() {
-        index = parseInt($(this).attr("data-index"))
-        if (choosed != "") {
-          $(choosed).removeClass("choose")
-        }
-        $(this).addClass("choose")
-        choosed = this
-      })
-      $("#comment-submit").click(function() {
-        var co = $("#comment-input").val()
-        if (co == "") {
-          error.top_message("Comment Can't Be Null")
-          return
-        }
-        if (index == 0) {
-          error.top_message("Please Rate First")
-          return
-        }
-        
-        comment.create({
-          comment: co, 
-          user: {{user.id}}, 
-          commodity:{{commodity.id}},
-          rating: index
-        }).done(function(data) {
-          $.get('/commodity/comment/'+data.id).done(function(html) {
-            success.top_message("Comment Add Success")
-            var html = $(html) 
-            html.hide()
-            $(".comments").prepend(html);
-            html.slideDown()
-          })
-
+<div id="comments-block">
+  <h3>Comments: </h3>
+  <hr/>
+  <div class="add-comment">
+  {% if user and user.can_comment(commodity)%}
+  <div class="row add-comment-content">
+    <div class="rating rating-e span2">
+      <span data-index="5">☆</span>
+      <span data-index="4">☆</span>
+      <span data-index="3">☆</span>
+      <span data-index="2">☆</span>
+      <span data-index="1">☆</span>
+    </div>
+    <div class="span7">
+      {{ forms.input("comment", "comment-input", class='span7', type='text', other='placeholder="Leave A Comment"') }}
+    </div>
+    {{ forms.bs_btn("Add Comment", btype="success", class="span2", icolor="white", itype="comment", other='id="comment-submit"')}}
+  <script>
+    $(document).ready(function() {
+        //for star
+        var index = 0;
+        var choosed = "";
+        $('.rating.rating-e span').click(function() {
+          index = parseInt($(this).attr("data-index"))
+          if (choosed != "") {
+            $(choosed).removeClass("choose")
+          }
+          $(this).addClass("choose")
+          choosed = this
         })
-        //clear
-        $("#comment-input").val("")
-        index = 0
-        $(choosed).removeClass("choose")
-        choosed = ""
-      })
-  })
-</script>
-{% endif %}
-<hr/>
-<div class="comments">
-  {% for comment in commodity.comments.order_by('date')|reverse%} 
-    <div class="row">
-      <div class="comment-user span2">
-        {{forms.bs_img('/static/img/profile/'+comment.user.id|string+'.png', id="profile-img")}}
-        <div class="comment-uesr-info">
-          <span class="comment-label">User Name : </span>
-          <span class="comment-username">{{comment.user.username}}</span>
+        $("#comment-submit").click(function() {
+          var co = $("#comment-input").val()
+          if (co == "") {
+            error.top_message("Comment Can't Be Null")
+            return
+          }
+          if (index == 0) {
+            error.top_message("Please Rate First")
+            return
+          }
+          
+          comment.create({
+            comment: co, 
+            user: {{user.id}}, 
+            commodity:{{commodity.id}},
+            rating: index
+          }).done(function(data) {
+            $.get('/commodity/comment/'+data.id).done(function(html) {
+              success.top_message("Comment Add Success")
+              var html = $(html) 
+              html.hide()
+              $(".comments").prepend(html);
+              html.slideDown()
+              $(".add-comment-content").fadeOut(function() {
+                var success = '<div class="alert alert-success">'
+                              + 'You Have Comment this Product</div>'
+                $(success).hide().appendTo(".add-comment").fadeIn()
+              }).remove();
+            })
+
+          })
+          //clear
+          $("#comment-input").val("")
+          index = 0
+          $(choosed).removeClass("choose")
+          choosed = ""
+        })
+    })
+  </script>
+  </div>
+  {% elif user and user.has_comment(commodity) %}
+  <div class="alert alert-success">
+    You Have Commented This Product
+  </div>
+  {% else %}
+  <div class="alert">
+    Before You Can Comment This Commodity, You Should Login and Buy It 
+  </div>
+  {% endif %}
+  </div>
+  <hr/>
+  <div class="comments">
+    {% for comment in commodity.comments.order_by('date')|reverse%} 
+      <div class="row">
+        <div class="comment-user span2">
+          {{forms.bs_img('/static/img/profile/'+comment.user.id|string+'.png', id="profile-img")}}
+          <div class="comment-uesr-info">
+            <span class="comment-label">User Name : </span>
+            <span class="comment-username">{{comment.user.username}}</span>
+          </div>
+        </div>
+        <div class="comment-comment span9">
+          <h6> Rating: </h6>
+          <p>
+            <div class="rating {%if comment.user == user %}rating-e{% endif %}">
+              {% for i in range(1, 6)|reverse %}
+              <span {%if i == comment.rating %}class="choose" {% endif %}>☆</span>
+              {% endfor %}
+            </div>
+          </p>
+          </p>
+          <h6> Comment: </h6>
+          <p>{{comment.comment}}</p>
         </div>
       </div>
-      <div class="comment-comment span9">
-        <h6> Rating: </h6>
-        <p>
-          <div class="rating">
-            {% for i in range(1, 6)|reverse %}
-            <span {%if i == comment.rating %}class="choose" {% endif %}>☆</span>
-            {% endfor %}
-          </div>
-        </p>
-        </p>
-        <h6> Comment: </h6>
-        <p>{{comment.comment}}</p>
-      </div>
-    </div>
-    {% if not loop.last %}
-    <hr/>
-    {% endif %}
-  {% endfor %}
+      {% if not loop.last %}
+      <hr/>
+      {% endif %}
+    {% endfor %}
+  </div>
 </div>

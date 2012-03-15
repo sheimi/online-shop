@@ -15,18 +15,18 @@
     <li>{{ forms.bs_link('Logout', icolor="black", itype="eject", href=url_for('core.logout'))}}</li>
   </ul>
 </li>
+{% if not user.admin %}
 <script>
-  !function(window) {
-    window.refresh_cart = function() {
-      $('#cart').remove()
-      $.get('{{url_for("cart.cart_tool")}}').done(function(data) {$('body').append(data)})
-    }
-  }(window)
-  refresh_cart()
+  register_refresh('cart', function() {
+    $('#cart').remove()
+    $.get('{{url_for("cart.cart_tool")}}').done(function(data) {$('body').append(data)})
+  })
+  refresh_all()
   !function(user) {
     user.id = {{user.id}}
   }(user)
 </script>
+{% endif %}
 {% else %}
 {% if not register %}
 <li>{{ forms.bs_link('Register', icolor="black", itype="chevron-right", href=url_for('core.register'))}}</li>

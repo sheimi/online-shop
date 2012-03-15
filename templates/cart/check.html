@@ -45,40 +45,11 @@
         <td><h5>Total Price</h5></td>
         <td><span class="label label-info">$<span class="all-price">{{order.total_price()}}</span></span></td>
         <td>
-          {{ forms.bs_btn("Confirm & Pay Your Order", btype="success", icolor="white", itype="shopping-cart", other='id="confirm-order"')}}
+          {{ forms.bs_link("Confirm & Pay Your Order", href=url_for('cart.check_address', order_id=order.id), class="btn btn-success", icolor="white", itype="shopping-cart", other='id="confirm-order"')}}
         </td>
       </tr>
     </tbody>
   </table>
 </div>
-<script>
-  $(document).ready(function() {
-      $('.order-num').change(function() {
-        var num = parseInt($(this).val())
-        var item_id = parseInt($(this).attr('data-id'))
-        var selected = this
-        order_item.update(item_id, {num:num}).done(function(data) {
-          console.log(data) 
-          console.log($(selected).parents('tr'))
-          var price = parseInt($(selected).parents('tr').find('.total-price').text())
-          var new_price = data.num * data.price
-          var total = parseInt($('.all-price').text())
-          $(selected).parents('tr').find('.total-price').text(new_price)
-          $('.all-price').text(total + new_price - price)
-          success.top_message("Your Order has Successfully Changed")
-        })
-      })
-      $('.close').click(function() {
-        var oid = parseInt($(this).attr('data-id'))
-        var selected = this
-        var total = parseInt($('.all-price').text())
-        var price = parseInt($(this).parent().find('.total-price').text())
-        order_item.delete(oid).done(function() {
-          $(selected).parents('tr').fadeOut()
-          $(".all-price").text(total-price)
-          success.top_message("Item Has Removed")
-        })
-      })
-  })
-</script>
+<script src="{{url_for('static', filename='js/mine/cart/check.js')}}"></script>
 {% endblock %}

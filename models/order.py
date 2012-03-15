@@ -1,7 +1,7 @@
 from shop import db
 from peewee import *
 from datetime import datetime as dt
-from models.core import User
+from models.core import User, Address
 from models.commodity import Commodity
 
 class UserOrder(db.Model):
@@ -15,10 +15,11 @@ class UserOrder(db.Model):
     is_confirmed = BooleanField(default=False)          #is confirmed   turn cart into an real order
     is_complete  = BooleanField(default=False)          #is the order conplete
 
-    status = IntegerField(default=0)              #0: init  1: confirmed 2: ... 3: ...
+    status = IntegerField(default=0)              #0: init  1: confirmed 2: sent 3: completed 4:canceled 
     discount = IntegerField(default=100)
 
     user = ForeignKeyField(User, related_name='orders', null=True)
+    address = ForeignKeyField(Address, related_name='orders', null=True) 
 
     def total_price(self):
         return sum([x.total_price() for x in self.items])

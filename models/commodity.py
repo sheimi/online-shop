@@ -25,6 +25,8 @@ class Commodity(db.Model):
 
     def avg_rating(self):
         ratings = [x.rating for x in self.comments]
+        if not ratings:
+            return "There are not comment" 
         avg_rating = sum(ratings) * 1.0 / len(ratings)
         return round(avg_rating, 1)
     

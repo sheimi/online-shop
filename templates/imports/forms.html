@@ -40,8 +40,8 @@
 </a>
 {% endmacro %}
 
-{% macro bs_btn(text, btype="primary", class="", icolor="white", itype="", other="") %}
-<a class="btn btn-{{btype}} {{class}}" {{other|safe}}>
+{% macro bs_btn(text, href="", btype="primary", class="", icolor="white", itype="", other="") %}
+<a class="btn btn-{{btype}} {{class}}" {{other|safe}} {%if href%}href="{{href}}"{%endif%}>
   {% if itype %}
   <i class="icon-{{itype}} icon-{{icolor}}"></i> 
   {% endif %}

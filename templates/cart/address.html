@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% import 'imports/forms.html' as forms %}
+
+{% block page_title %}Choose An Address {% endblock %}
+
+{% block container%}
+<div class="well container">
+  <legend>Choose Your Shipping address</legend>
+  <div id="address-list" class="row">
+    {% for address in user.addresses %}
+    <div class="span6" id="address-item-{{address.id}}">
+      <form class="form-horizontal" id="account-form">
+        <div class="span7 left"> 
+          {% call forms.bs_ctrgroup('Your Name') %}
+            {{forms.input('name', 'name-'+address.id|string, value=address.name, other='placeholder="Your Name"')}}
+          {% endcall %}
+          {% call forms.bs_ctrgroup('Address') %}
+            {{forms.input('address', 'address-'+address.id|string, value=address.address, other='placeholder="Address"')}}
+          {% endcall %}
+          {% call forms.bs_ctrgroup('Zip Code') %}
+            {{forms.input('zipcode', 'zipcode-'+address.id|string, value=address.zipcode, other='placeholder="Zip Code"')}}
+          {% endcall %}
+          {% call forms.bs_ctrgroup('Phone Number') %}
+            {{forms.input('phone', 'phone-'+address.id|string,value=address.phone,  other='placeholder="Phone Number"')}}
+          {% endcall %}
+        </div>
+        <div class="form-actions clear">
+        {{ forms.bs_btn('Choose This Address', btype='success', itype='shopping-cart', class="address-update",  
+          other='data-id="'+address.id|string+'"', href=url_for('cart.check_payment', order_id=order.id))}}
+        {{ forms.bs_btn('Delete', btype='danger', itype='trash', class="address-delete",  
+          other='data-id="'+address.id|string+'"')}}
+        </div>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  <hr/>
+  <div id="new-address-zone" class="row">
+    <div class="span6">
+      <h5>New Address</h5>
+      <hr/>
+      <form class="form-horizontal" id="account-form">
+        <div class="span7 left"> 
+          {% call forms.bs_ctrgroup('Your Name') %}
+            {{forms.input('name', 'new-name', other='placeholder="Your Name"')}}
+          {% endcall %}
+          {% call forms.bs_ctrgroup('Address') %}
+            {{forms.input('address', 'new-address', other='placeholder="Address"')}}
+          {% endcall %}
+          {% call forms.bs_ctrgroup('Zip Code') %}
+            {{forms.input('zipcode', 'new-zipcode', other='placeholder="Zip Code"')}}
+          {% endcall %}
+          {% call forms.bs_ctrgroup('Phone Number') %}
+            {{forms.input('phone', 'new-phone', other='placeholder="Phone Number"')}}
+          {% endcall %}
+        </div>
+        <div class="form-actions clear">
+        {{ forms.bs_btn('Choose This Address', btype='success', itype='shopping-cart', 
+          other='id="address-submit" style="margin-left: 20px"', href=url_for('cart.check_payment', order_id=order.id))}}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="{{url_for('static', filename='js/mine/cart/address.js')}}"></script>
+{% endblock %}

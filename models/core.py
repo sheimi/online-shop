@@ -25,6 +25,24 @@ class User(db.Model, BaseUser):
 
     membership = ForeignKeyField(Member, related_name='users', null=True)
 
-    def __repr__(self):
-        return "<User('%s')>" % (self.username)
+    def __unicode__(self):
+        return "%s" % (self.username)
 
+    def has_comment(self, commodity):
+        return self.comments.filter(commodity__id=commodity.id).count() > 0
+
+    def can_comment(self, commodity):
+        return commodity.order_items.filter(order__user__id =self.id, order__status=3).count() > 0 \
+                and not self.has_comment(commodity)
+
+class Address(db.Model):
+    columns = ('user', 'address',)
+
+    user = ForeignKeyField(User, related_name='addresses')
+    name = CharField(null=False)
+    address = CharField(null=False)
+    zipcode = CharField(null=False)
+    phone = CharField(null=False)
+
+    def __unicode__(self):
+        return "%s " % (self.user, self.address)

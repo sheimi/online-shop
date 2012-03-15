@@ -32,7 +32,7 @@ def login():
             session['user_pk'] = user.get_pk()
             session.permanent = True
             g.user = user
-            return jsonify(success=True)
+            return jsonify(success=True, is_admin=user.admin)
         else:
             return jsonify(success=False, msg="Wrong Password")
     else:
@@ -88,6 +88,9 @@ def register():
         user = User.create(username=username, password=password)
         #user.set_password(password)
         #user.save()
-        session["user_id"] = user.id
+        session['logged_in'] = True
+        session['user_pk'] = user.get_pk()
+        session.permanent = True
+        g.user = user
         return redirect(url_for('core.index')) 
 

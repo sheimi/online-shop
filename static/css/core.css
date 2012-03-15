@@ -284,3 +284,58 @@ span.item-img {
   left: 0;
   color: gold;
 }
+
+/*order*/
+.order-box {
+  border: 1px solid #A5CDEC;
+  background-color: #C9E5FC;
+  padding: 7px;
+  border-radius: 4px;
+  font-size: 15px;
+}
+.row-box, .order-confirm-box {
+  background: rgba(255, 255, 255, 0.7);
+  margin-top: 10px;
+}
+.order-box ul{
+  margin: 0;
+}
+.order-box li {
+  padding: 3px 0;
+}
+.order-box h6 {
+  margin-bottom: 5px;
+}
+.order-box a {
+  font-size: 13px; 
+}
+.order-box hr {
+  margin: 5px 0;
+  border-top: 1px solid #A0D4FF;
+  border-bottom: 1px solid #E5F2FD;
+}
+
+.order-box .confirm-item {
+  padding: 10px;
+}
+
+#order-confirm-outer {
+  width: 200px;
+}
+
+.order-confirm-box {
+  background-color: rgba(144, 202, 250, 0.63);
+}
+.order-confirm-box {
+  padding: 10px 16px;
+}
+.order-confirm-inner {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.order-confirm-inner li {
+  text-align: right;
+  padding-right: 20px;
+}
