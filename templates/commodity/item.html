@@ -13,7 +13,7 @@
 {% block page_title %}ADS{% endblock %}
 
 {% block container%}
-<div class="well container">
+<div class="well">
   <div class="row commodity-info">
     {{ forms.bs_img(url_for('static', filename='img/commodity/'+commodity.img_name), class="span5") }}
     <ul class="span5 offset1 info">
@@ -21,7 +21,7 @@
       {{ com_info("Commodity Name", commodity.name, "item-name")}}
       {{ com_info("Commodity Price", "$"+commodity.price|string, "item-price blue")}}
       {{ com_info("Average Rating", commodity.avg_rating(), "item-price")}}
-      {{ com_info("Descriptions", "$"+commodity.des, "item-price")}}
+      {{ com_info("Descriptions", commodity.des, "item-price")}}
       <li class="row">
         <span class="item-label span2">Number : </span>
         <div class="span3">

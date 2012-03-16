@@ -1,0 +1,33 @@
+.main-content {
+  margin-right: 320px;
+}
+.container {
+  width: 1180px;
+}
+div#logo-global {
+  /*background-image: url('../img/buy.gif');*/
+  height: 40px;
+  width: 100px;
+  position: absolute;
+  zoom: 120%;
+  top: 65px;
+  left: 30px;
+}
+
+div.search-wrapper {
+  margin-left: 90px;
+  display: inline-block;
+}
+
+#search-bar {
+  margin: 15px 0;
+  padding: 20px;
+}
+
+div#right-sider {
+  position: absolute;
+  width: 240px; 
+  height: 200px;
+  margin-top: 20px;
+  margin-left: 900px;
+}

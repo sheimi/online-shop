@@ -1,0 +1,9 @@
+{% import 'imports/forms.html' as forms %}
+<ul class="thumbnails">
+  {% for com in commodities %}
+  <li class="span3 img_wrapper">
+    {% call forms.bs_img_call(url_for('static', filename="img/commodity/")+com.imgs.execute().first().name, href="#", class="", id="") %}
+    {% endcall %}
+  </li>
+  {% endfor %} 
+</ul>

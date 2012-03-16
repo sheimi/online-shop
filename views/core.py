@@ -1,11 +1,26 @@
 from flask import Blueprint, render_template, g, session, jsonify, request,\
         redirect, url_for
+from models import *
 
 core = Blueprint('core', __name__)
 
 @core.route('/')
 def index():
     return render_template('core/index.html', index=True, user=g.user) 
+
+@core.route('/recommend')
+def recommend():
+    recommends = Commodity.select()
+    return render_template('core/recommend.html', recommends=recommends) 
+
+@core.route('/result')
+def result():
+    return render_template('core/result.html')
+
+@core.route('/com_list')
+def com_list():
+    commodities = Commodity.select().filter(**request.args)
+    return render_template('core/com_list.html', commodities = commodities)
 
 @core.route('/account')
 def account():

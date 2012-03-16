@@ -18,6 +18,10 @@ body {
   clear: both;
 }
 
+.brand {
+  color: rgba(244, 244, 244, 0.8) !important;
+}
+
 /**--colors---**/
 .blue {
   color: blue;

@@ -20,9 +20,10 @@
   <script src="{{url_for('static', filename='js/mine/core.js')}}"></script>
   <script src="{{url_for('static', filename='js/mine/obj.js')}}"></script>
   <script src="{{url_for('static', filename='js/mine/helper.js')}}"></script>
+  {% block ext_scrpt %}{% endblock %}
 </head>
 <body>
-{% call global.bs_top_bar("DHouse") %}
+{% call global.bs_top_bar("BuyBuy") %}
   <ul class="nav">
     <li {% if index %}class="active" {% endif %}>
       {{ forms.bs_link('Index', icolor="black", itype="home", href=url_for('core.index'))}} 
@@ -45,7 +46,7 @@
     });
   </script>
 {% endcall %}
-<div id="main-container" class="container-fluid">
+<div id="main-container" class="container">
   {%block container%} 
   {%endblock%}
 </div>

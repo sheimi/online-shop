@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 
+{% block ext_scrpt %}
+<link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}" />
+{% endblock %}
 {% block page_title %}ADS{% endblock %}
 
 {% block container%}
-<div class="row" id="item-rec-list-container">
+<div id="right-sider" class="well">
 </div>
-<div class="well" id="item-list-container">
+<div class="main-content">
+  {{global.bs_search_bar()}} 
+  <div id="recommend">
+  </div>
+  <div id="the-hostest">
+  </div>
+  <div id="new-stuff">
+  </div>
 </div>
 <script>
-$(document).ready(function() {
-
-})
+!function($) {
+  $("#recommend").load("{{url_for('core.recommend')}}")
+}(jQuery)
 </script>
 {% endblock %}

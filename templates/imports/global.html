@@ -59,3 +59,55 @@
   </div>
 </div>
 {% endmacro %}
+
+{% macro bs_search_bar2(width="600px") %}
+<div id="search-bar">
+  <div class="input-prepend input-append" style="font-size: 15px;">
+    <span class="add-on" style="border-radius: 3px 0 0 3px; border-right: 0; height: 19px; padding: 7px 10px">All</span>
+    <input type="search" id="index-search" placeholder="Your Can Search Here" style="width: {{width}}; height: 25px; border-radius: 0">
+    <button class="btn add-on" type="button" style="height: 35px;">Search !</button>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro bs_search_bar(width="550px") %}
+<div id="search-bar">
+  <div class="input-append" style="font-size: 15px;">
+    <span id="select-wrapper" class="add-on" style="border-radius: 3px 0 0 3px; border-right: 0; height: 19px; padding: 7px 10px">
+      <span id="selected-item">All</span>   
+      <select id="cat-select" style="opacity: 0; position: absolute; margin-top: -25px; margin-left: -10px;width: 40px; height: 35px;">
+      </select>
+    </span>
+    <input type="search" id="index-search" placeholder="Your Can Search Here" style="width: {{width}}; height: 25px; border-radius: 0">
+    <button class="btn add-on" type="button" style="height: 35px;">Search !</button>
+  </div>
+</div>
+<script>
+!function($) {
+  $.getJSON('/api/category').done(function(obj) {
+    objs = obj.objects
+    function make_option(val, text) {
+      return "<option value=\""+val+"\">"+text+"</option>"
+    }
+    var s = "" 
+    for (var o in objs) {
+      var ins = objs[o]
+      s += make_option(ins.id, ins.name) 
+    }
+    $(s).appendTo("#cat-select")
+  })
+  $("#cat-select").change(function() {
+     $(this).find("option").each(function() {
+       if ($(this).attr("selected") == "selected") {
+         var w1 = $("#select-wrapper").width()
+         $("#selected-item").text($(this).text())
+         var w2 = $("#select-wrapper").width()
+         $("#cat-select").width($("#select-wrapper").width()+20)
+         var w3 = $("#index-search").width() + w1 -w2
+         $("#index-search").width(w3)
+       }
+     })
+  })
+}(jQuery)
+</script>
+{% endmacro %}

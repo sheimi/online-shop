@@ -14,6 +14,7 @@ app.config.update(
         'name'  :   'models/shop.db',
         'engine':   'peewee.SqliteDatabase',
     },
+    INDEX_DIR = 'indexdir',
 )
 
 db = Database(app)

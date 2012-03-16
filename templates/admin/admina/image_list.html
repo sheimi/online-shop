@@ -26,7 +26,7 @@
         {% call forms.bs_img_call(url_for('static', filename="img/commodity/")+img.name, href="#", class="", id="") %}
           {{forms.bs_btn("Delete", btype="danger", class="delete-img span8", icolor="white", itype="trash", href=url_for('admina.image_delete'), other='data-id="'+img.id|string+'"')}}
         {% endcall %}
-      <li>
+      </li>
       {% endfor %} 
     </ul>
   </div>

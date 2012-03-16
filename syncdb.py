@@ -56,7 +56,7 @@ def init_db():
     user.save()
 
     #init Commodity
-    cat = Category.create(name="c1")
+    cat = Category.create(name="All")
     co = Commodity.create(name="co1")
     co.category = cat
     co.save()
