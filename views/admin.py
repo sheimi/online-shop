@@ -190,8 +190,9 @@ class ModelAdmin(object):
                 return self.dispatch_save_redirect(instance)
         else:
             form = Form(obj=instance)
+            class_name = self.model.__name__
         
-        return render_template('admin/models/edit.html', model_admin=self, instance=instance, form=form)
+        return render_template('admin/models/edit.html', model_admin=self, instance=instance, form=form, class_name=class_name)
     
     def collect_objects(self, obj):
         select_queries, nullable_queries = obj.collect_queries()

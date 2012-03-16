@@ -29,3 +29,35 @@ def categories():
 def commodity_list():
     commodities = Commodity.select().filter(**request.args)
     return render_template('admin/admina/commodity_list.html', commodities=commodities)
+
+@admina.route('/images/<int:com_id>')
+@admin_required
+def commodity_image(com_id):
+    commodity = get_object_or_404(Commodity, id=com_id)
+    return render_template('admin/admina/image_list.html', commodity=commodity)
+
+@admina.route('/images/delete', methods=['DELETE'])
+@admin_required
+def image_delete():
+    img = get_object_or_404(CommodityImage, id=request.json.get('id', None))
+    img.delete_instance()
+    path = "/".join(['./static/img/commodity', img.name])
+    import os
+    os.remove(path)
+    return jsonify(success=True)
+
+
+@admina.route('/images/upload/<int:com_id>', methods=['POST'])
+@admin_required
+def image_upload(com_id):
+    datafile = request.files['file']
+    filename = datafile.filename
+    path = "/".join(['./static/img/commodity', filename])
+    url = "/".join(['/static/img/commodity', filename])
+
+    commodity = get_object_or_404(Commodity, id=com_id)
+    img = CommodityImage.create(name=filename, commodity=commodity)
+
+    datafile.save(path)
+    return jsonify(success=True, url=url, img_id=img.id)
+

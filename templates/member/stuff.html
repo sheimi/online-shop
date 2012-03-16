@@ -1,7 +1,6 @@
 {% import 'imports/forms.html' as forms %}
 {% call forms.bs_accordion('user-accordion') %}
   {% call forms.bs_accordion_item('user-accordion', 'user-profile', 'Profile', in=True) %}
-    <form class="form-horizontal" id="account-form">
       <div class="span7 left"> 
         {% call forms.bs_ctrgroup('Username') %}
           {{forms.input('username', 'account-username', value=user.username, other='placeholder="User Name"')}}
@@ -33,7 +32,6 @@
       {{ forms.bs_btn('Delete', btype='danger', itype='trash', 
         other='id="account-delete"', class="offset1")}}
       </div>
-    </form>
   {% endcall %}
   {% call forms.bs_accordion_item('user-accordion', 'user-password', 'Password') %}
     <form class="form-horizontal" id="passwd-form">

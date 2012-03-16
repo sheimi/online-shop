@@ -21,6 +21,17 @@
 </a>
 {% endmacro %}
 
+{% macro bs_img_call(src, href="", class="", id="") %}
+<div class="thumbnail {{class}}">
+  <a {% if href %} href="{{href}}" {%endif%}>
+    <img src="{{src}}" {% if id %}id="{{id}}" {%endif%}/>
+  </a>
+  <div class="caption row">
+    {{caller()}}
+  </div>
+</div>
+{% endmacro %}
+
 
 {% macro bs_ctrgroup(label) %}
 <div class="control-group">

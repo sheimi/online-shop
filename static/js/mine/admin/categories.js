@@ -38,6 +38,11 @@ $(document).ready(function() {
       obj.attr("data-id", data.id) 
       success.top_message("Category Successfully Created")
     })
+  }).bind("remove.jstree", function(event, data) {
+    var p_id = parseInt(data.rslt.obj.attr("data-id"))
+    category.delete(p_id).done(function(data) {
+      success.top_message("Category Successfully Deleted")
+    })
   }).bind("move_node.jstree", function(event, data) {
     var np_id = parseInt(data.rslt.np.attr("data-id"))
     var o_id = parseInt(data.rslt.o.attr("data-id"))

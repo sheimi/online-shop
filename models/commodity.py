@@ -52,11 +52,15 @@ class CommodityAdmin(ModelAdmin):
 class CommodityCommentAdmin(ModelAdmin):
     columns = ('user', 'commodity', 'comment')
 
+class CommodityImageAdmin(ModelAdmin):
+    columns = ('commodity')
+
 #register stuff
 def register_commodity(**regs):
     regs['admin'].register(Category, CategoryAdmin)
     regs['admin'].register(Commodity, CommodityAdmin)
     regs['admin'].register(CommodityComment, CommodityCommentAdmin)
+    regs['admin'].register(CommodityImage)
     
     regs['api'].register(Category)
     regs['api'].register(Commodity)

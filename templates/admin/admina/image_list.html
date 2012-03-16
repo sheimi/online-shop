@@ -1,0 +1,36 @@
+{% import 'imports/forms.html' as forms %}
+{% extends "admin/base.html" %}
+{% block content_title %}Image For {{commodity.name}}{% endblock %} 
+{% block content_tagline %}{% endblock %}
+{% block breadcrumbs %}
+<li>
+  <span class="divider">/</span>
+  <a href="{{url_for('admina.commodity_image', com_id=commodity.id)}}">Manage Images</a>
+</li>
+{% endblock %}
+{% block pre_content %}{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="offset1">
+    <label>Image Upload : </label>
+    <form>
+      <input data-url="{{url_for('admina.image_upload', com_id=commodity.id)}}" type="file" name="file" id="img-uploader"/>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="span9 offset1">
+    <ul class="thumbnails">
+      {% for img in commodity.imgs %}
+      <li class="span3 img_wrapper">
+        {% call forms.bs_img_call(url_for('static', filename="img/commodity/")+img.name, href="#", class="", id="") %}
+          {{forms.bs_btn("Delete", btype="danger", class="delete-img span8", icolor="white", itype="trash", href=url_for('admina.image_delete'), other='data-id="'+img.id|string+'"')}}
+        {% endcall %}
+      <li>
+      {% endfor %} 
+    </ul>
+  </div>
+</div>
+<script src="{{url_for('static', filename='js/jquery.upload-1.0.2.js')}}"></script>
+<script src="{{url_for('static', filename='js/mine/admin/image.js')}}"></script>
+{% endblock %}
