@@ -1,0 +1,32 @@
+<li class="nav-header">Filters</li>
+{% for ca in categories %}
+<li class="filters {% if ca.id == 1 %}active{% endif %}" data-cat="{{ca.get_children()}}"><a href="#">{{ca.name}}</a></li>
+{% endfor %}
+<script>
+!function($) {
+  $('.filters').click(function(e) {
+    e.preventDefault()
+    $('.filters').each(function() {
+      $(this).removeClass('active')
+    })
+    $(this).addClass('active')
+    var cats = $(this).attr("data-cat")
+    cats = JSON.parse(cats)
+    $("#com-list li").each(function() {
+      var cat = parseInt($(this).attr("data-cat"))
+      var is_in = cats.indexOf(cat)
+      if (is_in != -1) {
+        if ($(this).attr("data-hide") == "true") {
+          $(this).fadeIn()
+          $(this).attr("data-hide", "false")
+        }
+      } else {
+        if ($(this).attr("data-hide") == "false") {
+          $(this).fadeOut()
+          $(this).attr("data-hide", "true")
+        }
+      }
+    })
+  })
+}(jQuery)
+</script>

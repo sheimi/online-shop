@@ -12,6 +12,25 @@ class Category(db.Model):
     def __unicode__(self):
         return "%s" % self.name
 
+    def get_children(self):
+        result = []
+        def get_ch(child):
+            if child.children.count() == 0:
+                result.append(child.id)
+                return
+            it = iter(child.children)
+            try:
+                while True:
+                    get_ch(it.next())
+            except StopIteration:
+                result.append(child.id)
+                return
+
+        get_ch(self)
+        import json
+        return json.dumps(result)
+
+
 class Commodity(db.Model):
 
     name = CharField()

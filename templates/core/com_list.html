@@ -1,9 +1,46 @@
 {% import 'imports/forms.html' as forms %}
-<ul class="thumbnails">
+<ul class="thumbnails" id="com-list">
   {% for com in commodities %}
-  <li class="span3 img_wrapper">
-    {% call forms.bs_img_call(url_for('static', filename="img/commodity/")+com.imgs.execute().first().name, href="#", class="", id="") %}
+  <li class="span3 img_wrapper" data-cat="{{com.category.id}}" data-hide="false">
+    {% call forms.bs_img_call(url_for('static', filename="img/commodity/")+com.imgs.execute().first().name, href="#", other='data-id="'+com.id|string+'"') %}
+    <h6>{{com.name}}</h6>
+    <hr>
+    <div>
+      <span class="i-choose">
+      {{forms.bs_link("Choose", itype="ok", href="#", other='style="padding-top: 2px;"') }}
+      </span>
+      <span class="i-detail">
+      {{forms.bs_link("Detail", itype="ok", href=url_for('commodity.item', item_id=com.id),) }}
+      </span>
+    </div>
     {% endcall %}
+    {#
+      {{ forms.bs_img(url_for('static', filename="img/commodity/")+com.imgs.execute().first().name, href="#", class="", id="") }}
+    #}
   </li>
   {% endfor %} 
 </ul>
+<script>
+!function($) {
+  $(".thumbnail").hover(function() {
+    $(this).addClass("hover")
+  }, function() {
+    $(this).removeClass("hover")
+    })
+  $(".thumbnail .i-choose").click(function(e) {
+    e.preventDefault()
+    var has = $(this).hasClass("choosed")
+    var item = $(this).parents(".thumbnail")
+    if (has) {
+      compare.remove_item(item)
+      $(this).removeClass("choosed")
+      $(this).find('a span.text').text("Choose")
+    } else {
+      if (compare.add_item(item)) {
+        $(this).addClass("choosed")
+        $(this).find('a span.text').text("Choosed")
+      }
+    }
+  })
+}(jQuery)
+</script>

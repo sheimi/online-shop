@@ -8,12 +8,28 @@
 {% block container%}
 <div class="well">
   {{global.bs_search_bar()}} 
-  <div id="result">
+  <div id="result" class="row">
+    <div id="result-wrapper" class="span9 columns">
+    </div>
+    <div id="result-nav" class="span2 columns">
+      <ul class="nav nav-list">
+        <li class="nav-header">Operations</li>
+        <li id="compare-item"><a href="#">compare</li></li>
+      </ul>
+    </div>
   </div>
 </div>
+<script src="{{ url_for('static', filename='js/mine/core/compare.js') }}"></script>
 <script>
 !function($) {
-  $("#result").load("{{url_for('core.com_list')}}")
+  $("#result-wrapper").load("{{url_for('core.com_list')}}")
+  $.get("{{url_for('core.com_filter_list')}}").done(function(data) {
+    $("#result-nav ul").prepend(data)
+  })
+  $("#compare-item").click(function(e) {
+    e.preventDefault()
+    compare.compare()
+  })
 }(jQuery)
 </script>
 {% endblock %}

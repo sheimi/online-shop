@@ -1,0 +1,15 @@
+<div id="compare-box" style="opacity: 0; position: fixed; bottom: -800px; left: 100px; right: 100px; height: 600px; padding: 7px; font-size: 13px; border: solid #D2D2D2 1px; border-radius: 2px 0 0 2px; box-shadow: rgba(0, 0, 0, 0.0976563) 0px 0px 5px 0px;background-color:whiteSmoke;">
+  <div id="box-close" style="float: right; font-size: 30px; margin-right: 15px; color: #ccc; cursor: pointer;">
+    &times;
+  </div>
+</div>
+<script>
+!function($) {
+  $("#compare-box").animate({ opacity: 1, bottom: '+=820'}, 800)
+  $("#box-close").click(function() {
+    $("#compare-box").animate({ opacity: 0, bottom: '-=820'}, 800, function(){
+      $(this).remove()
+    })
+  })
+}(jQuery)
+</script>

@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, g, session, jsonify, request,\
         redirect, url_for
 from models import *
+from util.auth import login_required, get_object_or_404
 
 core = Blueprint('core', __name__)
 
@@ -20,7 +21,18 @@ def result():
 @core.route('/com_list')
 def com_list():
     commodities = Commodity.select().filter(**request.args)
-    return render_template('core/com_list.html', commodities = commodities)
+    return render_template('core/com_list.html', commodities=commodities)
+
+@core.route('/com_filter_list')
+def com_filter_list():
+    categories = Category.select().filter(**request.args)
+    return render_template('core/com_filter_list.html', categories=categories)
+
+@core.route('/compare-box')
+def compare_box():
+    c1 = get_object_or_404(Commodity, id=request.args.get("c1"))
+    c2 = get_object_or_404(Commodity, id=request.args.get("c2"))
+    return render_template('core/compare_box.html', c1=c1, c2=c2)
 
 @core.route('/account')
 def account():

@@ -343,3 +343,22 @@ span.item-img {
   text-align: right;
   padding-right: 20px;
 }
+
+.thumbnail.hover {
+  border: 1px solid #08C;
+}
+.thumbnail.choosed {
+  border: 1px solid red; 
+}
+.thumbnail span.choosed a {
+  color: red;
+}
+.thumbnail .i-detail {
+  margin-left: 25px;
+}
+.thumbnail hr{
+  margin: 3px 0 5px 0;
+}
+#result-nav {
+  width: 180px;
+}
