@@ -20,6 +20,16 @@
 <script>
 !function($) {
   $("#recommend").load("{{url_for('core.recommend')}}")
+  function start_query() {
+    var query = $("#search-commodity-input").val()
+    window.location.href="{{url_for('core.result')}}?q="+query
+  }
+  $("#search-commodity-input").keydown(function(e) {
+    if (e.keyCode == 13) {
+      start_query()
+    }
+  })
+  $("#search-commodity-btn").click(start_query)
 }(jQuery)
 </script>
 {% endblock %}
