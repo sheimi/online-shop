@@ -42,12 +42,20 @@
 
   function start_query() {
     var query = $("#search-commodity-input").val()
+    /*
     if (query == "") {
       error.top_message("Fill the query first")
       return
     }
+    */
     $("#result-wrapper").fadeOut(function() {
-      $(this).load("{{url_for('core.search_commodity')}}?q="+query, function() {
+      var url = ""
+      if (query == "") {
+        url = "{{url_for('core.com_list')}}" 
+      } else {
+        url = "{{url_for('core.search_commodity')}}?q="+query
+      }
+      $(this).load(url, function() {
         $(this).fadeIn()
       })
     })
