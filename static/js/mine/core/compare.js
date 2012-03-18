@@ -27,6 +27,18 @@
       $(item).removeClass("choosed")
       ids[id] = true
     }
+    , cancel_all: function() {
+      if (!ids[0]) {
+        compare.remove_item(compare_items[0])
+        var item = compare_items[0]
+        $(item).find(".i-choose").removeClass("choosed").find(".text").text("Choose Me")
+      }
+      if (!ids[1]) {
+        compare.remove_item(compare_items[1])
+        var item = compare_items[1]
+        $(item).find(".i-choose").removeClass("choosed").find(".text").text("Choose Me")
+      }
+    }
     , compare: function() {
       if (ids[0] || ids[1]) {
         error.top_message("Please choose two items to compare")

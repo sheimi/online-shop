@@ -12,7 +12,8 @@
     <div id="result-nav" class="right columns">
       <ul class="nav nav-list">
         <li class="nav-header">Operations</li>
-        <li id="compare-item"><a href="#">compare</li></li>
+        <li id="compare-item"><a href="#">compare</li>
+        <li id="cancel-all"><a href="#">cancel all</li>
       </ul>
     </div>
     <div id="result-wrapper" class="span9 columns">
@@ -22,13 +23,21 @@
 <script src="{{ url_for('static', filename='js/mine/core/compare.js') }}"></script>
 <script>
 !function($) {
-  $("#result-wrapper").load("{{url_for('core.search_commodity', q=query)}}")
+  {% if query %}
+    $("#result-wrapper").load("{{url_for('core.search_commodity', q=query)}}")
+  {% else %}
+    $("#result-wrapper").load("{{url_for('core.com_list')}}")
+  {% endif %}
   $.get("{{url_for('core.com_filter_list')}}").done(function(data) {
     $("#result-nav ul").prepend(data)
   })
   $("#compare-item").click(function(e) {
     e.preventDefault()
     compare.compare()
+  })
+  $("#cancel-all").click(function(e) {
+    e.preventDefault()
+    compare.cancel_all()
   })
 
   function start_query() {

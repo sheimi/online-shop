@@ -7,7 +7,7 @@
     <hr>
     <div>
       <span class="i-choose">
-      {{forms.bs_link("Choose", itype="ok", href="#", other='style="padding-top: 2px;"') }}
+      {{forms.bs_link("Choose Me", itype="ok", href="#", other='style="padding-top: 2px;"') }}
       </span>
       <span class="i-detail">
       {{forms.bs_link("Detail", itype="ok", href=url_for('commodity.item', item_id=com.id),) }}
@@ -34,7 +34,7 @@
     if (has) {
       compare.remove_item(item_wrapper)
       $(item).removeClass("choosed")
-      $(item).find('a span.text').text("Choose")
+      $(item).find('a span.text').text("Choose Me")
     } else {
       if (compare.add_item(item_wrapper)) {
         $(item).addClass("choosed")
