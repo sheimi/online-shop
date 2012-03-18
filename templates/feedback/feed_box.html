@@ -24,6 +24,7 @@
     var value = $("#feed-box-area").val()
     if (value == "") {
       error.top_message("Please Fill Your Feedback In The White Box")
+      return
     }
     var render = {
       content : value
