@@ -1,3 +1,4 @@
+#!/bin/env python
 '''
 This file is to create the index of commodities 
 '''

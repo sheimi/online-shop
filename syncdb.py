@@ -1,3 +1,4 @@
+#!/bin/env python
 from shop import db
 from models import *
 from peewee import *

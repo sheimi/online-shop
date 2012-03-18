@@ -1,3 +1,4 @@
+#!/bin/env python
 from flask import Flask, g, session
 from flask_peewee.db import Database
 from views.admin import Admin
