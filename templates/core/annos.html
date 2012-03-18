@@ -1,0 +1,11 @@
+<h5>Announcements</h5>
+<hr/>
+{% for anno in annos %}
+  <h6>{{anno.title}}</h6>
+  <p>
+    {{anno.content}}
+  </p>
+  {% if not loop.last %}
+  <hr/>
+  {% endif %}
+{% endfor %}

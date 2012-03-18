@@ -34,6 +34,11 @@ def get_new():
         result = result[:5]
     return render_template('core/carousel_view.html', items=result, title="What's New", id="new")
 
+@core.route('/get-anno')
+def get_anno():
+    annos = list(Announcement.select())
+    annos = annos[-5:]
+    return render_template('core/annos.html', annos=annos)
 
 
 @core.route('/result')

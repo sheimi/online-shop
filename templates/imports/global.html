@@ -78,7 +78,7 @@
       <select id="cat-select" style="opacity: 0; position: absolute; margin-top: -25px; margin-left: -10px;width: 40px; height: 35px;">
       </select>
     </span>
-    <input id="search-commodity-input" type="search" id="index-search" placeholder="Your Can Search Here" style="width: {{width}}; height: 25px; border-radius: 0">
+    <input id="search-commodity-input" type="search" placeholder="Your Can Search Here" style="width: {{width}}; height: 25px; border-radius: 0">
     <button id="search-commodity-btn" class="btn add-on" type="button" style="height: 35px;">Search !</button>
   </div>
 </div>
@@ -102,9 +102,10 @@
          var w1 = $("#select-wrapper").width()
          $("#selected-item").text($(this).text())
          var w2 = $("#select-wrapper").width()
-         $("#cat-select").width($("#select-wrapper").width()+20)
-         var w3 = $("#index-search").width() + w1 -w2
-         $("#index-search").width(w3)
+         console.log($("#search-commodity-input").width())
+         $("#cat-select").width($("#select-wrapper").width()+21)
+         var w3 = $("#search-commodity-input").width() + w1 -w2
+         $("#search-commodity-input").width(w3)
        }
      })
   })

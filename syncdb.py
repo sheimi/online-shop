@@ -148,6 +148,10 @@ def init_db():
     #user.set_password("zhang")
     #user.save()
 
+    Announcement.create(title="Hello", content="World")
+    Announcement.create(title="Hello", content="World")
+    Announcement.create(title="Hello", content="World")
+
     for i in range(100):
         random_user()
 

@@ -3,6 +3,7 @@
     recommend: '/core/recommend',
     get_hot: '/core/get-hot',
     get_new: '/core/get-new',
+    get_anno: '/core/get-anno',
     get_result: '/core/result?q='
   }
   $("#recommend").load(url.recommend)
@@ -18,4 +19,6 @@
     }
   })
   $("#search-commodity-btn").click(start_query)
+  $("#right-sider").hide().load(url.get_anno).slideDown()
+
 }(jQuery)
