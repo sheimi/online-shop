@@ -36,6 +36,7 @@ class Commodity(db.Model):
     name = CharField()
     price = IntegerField(default=100)
     des = TextField(default="This is the Description")
+    join_date = DateTimeField(default=datetime.datetime.now)
 
     category = ForeignKeyField(Category, related_name='commodities', null=True)
     

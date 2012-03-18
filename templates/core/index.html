@@ -20,6 +20,8 @@
 <script>
 !function($) {
   $("#recommend").load("{{url_for('core.recommend')}}")
+  $("#the-hostest").load("{{url_for('core.get_hot')}}")
+  $("#new-stuff").load("{{url_for('core.get_new')}}")
   function start_query() {
     var query = $("#search-commodity-input").val()
     window.location.href="{{url_for('core.result')}}?q="+query

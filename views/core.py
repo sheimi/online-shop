@@ -14,8 +14,27 @@ def index():
 
 @core.route('/recommend')
 def recommend():
-    recommends = Commodity.select()
-    return render_template('core/recommend.html', recommends=recommends) 
+    recommends = list(Commodity.select())[0:10]
+    return render_template('core/carousel_view.html', title="Recommendation", items=recommends) 
+
+@core.route('/get-hot')
+def get_hot():
+    coms = list(Commodity.select())
+    result = sorted(coms, key=lambda a: a.order_items.count(), reverse=True)
+    if len(result) > 5:
+        result = result[:5]
+    return render_template('core/carousel_view.html', items=result, title="What's Host")
+
+
+@core.route('/get-new')
+def get_new():
+    coms = list(Commodity.select())
+    result = sorted(coms, key=lambda a: a.join_date, reverse=True)
+    if len(result) > 5:
+        result = result[:5]
+    return render_template('core/carousel_view.html', items=result, title="What's New")
+
+
 
 @core.route('/result')
 def result():
