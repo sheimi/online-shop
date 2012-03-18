@@ -19,6 +19,6 @@
     }
   })
   $("#search-commodity-btn").click(start_query)
-  $("#right-sider").hide().load(url.get_anno).slideDown()
+  $("#annos").hide().load(url.get_anno).slideDown()
 
 }(jQuery)

@@ -33,11 +33,12 @@ def register_module():
     from models import register_commodity, register_core, register_order, register_attachment
 
     app.register_blueprint(member, url_prefix='/member')
-    app.register_blueprint(core, url_prefix='/core')
     app.register_blueprint(commodity, url_prefix='/commodity')
     app.register_blueprint(cart, url_prefix='/cart')
     app.register_blueprint(admina, url_prefix='/admina')
     app.register_blueprint(feedback, url_prefix='/feedback')
+    app.register_blueprint(core, url_prefix='/core')
+    app.register_blueprint(core, url_prefix='/')
 
     register_order(admin=admin, api=api)
     register_commodity(admin=admin, api=api)

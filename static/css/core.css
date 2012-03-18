@@ -73,6 +73,10 @@ span.item-img {
   display: table-cell;
 }
 
+.gallery-row {
+  margin-bottom: 10px;
+}
+
 /* datepicker */
 .datepicker {
   background-color: #ffffff;
