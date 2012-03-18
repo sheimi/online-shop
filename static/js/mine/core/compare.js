@@ -57,11 +57,6 @@
 }(window, jQuery)
 
 !function($) {
-  $(".thumbnail").live('hover', function() {
-    $(this).addClass("hover")
-  }, function() {
-    $(this).removeClass("hover")
-  })
   function mark_item(item) {
     var has = $(item).hasClass("choosed")
     var item_wrapper = $(item).parents(".thumbnail")
@@ -97,3 +92,22 @@
     compare.cancel_all()
   })
 }(jQuery)
+
+!function($, window) {
+  function set_scroll_event(mtop, item) {
+    $(document).scroll(function() {
+      var s_top = $(this).scrollTop()
+      var target = $(item)
+      if (s_top > mtop) {
+        if (!target.hasClass("fixed")) {
+          target.addClass("fixed")
+        }
+      } else {
+        if (target.hasClass("fixed")) {
+          target.removeClass("fixed")
+        }
+      }
+    })
+  }
+  window.set_scroll_event = set_scroll_event
+}(jQuery, window)

@@ -31,5 +31,9 @@ div#right-sider {
   margin-left: 900px;
 }
 
-div#right-sider div {
+#compare-operations.fixed {
+  position: fixed;
+  top: 100px;
+  right: 78px;
+  width: 200px;
 }

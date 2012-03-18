@@ -367,6 +367,13 @@ span.item-img {
   width: 180px;
 }
 
+#result-nav.fixed {
+  position: fixed;
+  top: 100px;
+  right: 178px;
+  width: 180px;
+}
+
 /** compare box **/
 .compare-item, .compare-info, .operation {
   margin-left: 50px !important;

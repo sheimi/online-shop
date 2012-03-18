@@ -12,8 +12,8 @@
     <div id="result-nav" class="right columns">
       <ul class="nav nav-list">
         <li class="nav-header">Operations</li>
-        <li id="compare-item"><a href="#">compare</li>
-        <li id="cancel-all"><a href="#">cancel all</li>
+        <li id="compare-item"><a href="#">compare</a></li>
+        <li id="cancel-all"><a href="#">cancel all</a></li>
       </ul>
     </div>
     <div id="result-wrapper" class="span9 columns">
@@ -23,6 +23,7 @@
 <script src="{{ url_for('static', filename='js/mine/core/compare.js') }}"></script>
 <script>
 !function($) {
+  set_scroll_event(16, $("#result-nav"))  
   {% if query %}
     $("#result-wrapper").load("{{url_for('core.search_commodity', q=query)}}")
   {% else %}

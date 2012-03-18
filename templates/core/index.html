@@ -9,11 +9,11 @@
 <div id="right-sider">
   <div id="annos" class="well">
   </div>
-  <div class="well columns">
+  <div id="compare-operations" class="well columns">
     <ul class="nav nav-list">
       <li class="nav-header">Operations</li>
-      <li id="compare-item"><a href="#">compare</li>
-      <li id="cancel-all"><a href="#">cancel all</li>
+      <li id="compare-item"><a href="#">compare</a></li>
+      <li id="cancel-all"><a href="#">cancel all</a></li>
     </ul>
   </div>
 </div>
@@ -26,6 +26,11 @@
   <div id="new-stuff">
   </div>
 </div>
-<script src="{{url_for('static', filename='js/mine/core/index.js')}}"></script>
 <script src="{{ url_for('static', filename='js/mine/core/compare.js') }}"></script>
+<script src="{{url_for('static', filename='js/mine/core/index.js')}}"></script>
+<script>
+!function($) {
+  set_scroll_event(310, $("#compare-operations"))  
+}(jQuery)
+</script>
 {% endblock %}
