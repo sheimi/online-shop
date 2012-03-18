@@ -82,31 +82,7 @@
   <hr/>
   <div class="comments">
     {% for comment in commodity.comments.order_by('date')|reverse%} 
-      <div class="row">
-        <div class="comment-user span2">
-          {{forms.bs_img('/static/img/profile/'+comment.user.id|string+'.png', class="profile-img")}}
-          <div class="comment-uesr-info">
-            <span class="comment-label">User Name : </span>
-            <span class="comment-username">{{comment.user.username}}</span>
-          </div>
-        </div>
-        <div class="comment-comment span9">
-          <h6> Rating: </h6>
-          <p>
-            <div class="rating {%if comment.user == user %}rating-e{% endif %}">
-              {% for i in range(1, 6)|reverse %}
-              <span {%if i == comment.rating %}class="choose" {% endif %}>☆</span>
-              {% endfor %}
-            </div>
-          </p>
-          </p>
-          <h6> Comment: </h6>
-          <p>{{comment.comment}}</p>
-        </div>
-      </div>
-      {% if not loop.last %}
-      <hr/>
-      {% endif %}
+      {% include "commodity/item_comment" %}
     {% endfor %}
   </div>
 </div>

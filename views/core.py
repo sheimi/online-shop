@@ -41,12 +41,12 @@ def result():
     query = request.args.get('q', None)
     return render_template('core/result.html', query=query)
 
-@core.route('/com_list')
+@core.route('/com-list')
 def com_list():
     commodities = Commodity.select().filter(**request.args)
     return render_template('core/com_list.html', commodities=commodities)
 
-@core.route('/com_filter_list')
+@core.route('/com-filter-list')
 def com_filter_list():
     categories = Category.select().filter(**request.args)
     return render_template('core/com_filter_list.html', categories=categories)

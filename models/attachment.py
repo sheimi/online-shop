@@ -19,7 +19,7 @@ class Feedback(db.Model):
     def __unicode__(self):
         return "%s" % (self.content)
 
-def register_core(**regs):
+def register_attachment(**regs):
     regs['admin'].register(Feedback)
     regs['admin'].register(Announcement)
     

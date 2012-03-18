@@ -45,10 +45,10 @@
   var window_width = $(window).width()
   var box_width = $("#compare-box").width()
   $("#compare-box").css("left", (window_width - box_width)/2)
-  $("#compare-box").animate({ opacity: 1, bottom: '+=820'}, 800)
+  $("#compare-box").animate({ opacity: 1, bottom: '+=820'}, 400)
   $("#backdrop").hide().fadeIn()
   function remove() {
-    $("#compare-box").animate({ opacity: 0, bottom: '-=820'}, 800, function(){
+    $("#compare-box").animate({ opacity: 0, bottom: '-=820'}, 400, function(){
       $(this).remove()
     })
     $("#backdrop").fadeOut(function() {
