@@ -15,6 +15,11 @@
     <li>{{ forms.bs_link('Logout', icolor="black", itype="eject", href=url_for('core.logout'))}}</li>
   </ul>
 </li>
+<script>
+!function(user) {
+  user.id = {{user.id}}
+}(user)
+</script>
 {% if not user.admin %}
 <script>
   register_refresh('cart', function() {
@@ -22,9 +27,6 @@
     $.get('{{url_for("cart.cart_tool")}}').done(function(data) {$('body').append(data)})
   })
   refresh_all()
-  !function(user) {
-    user.id = {{user.id}}
-  }(user)
 </script>
 {% endif %}
 {% else %}

@@ -35,6 +35,11 @@ def create_db():
     OrderStatus.drop_table()
     OrderStatus.create_table()
 
+    Announcement.drop_table()
+    Announcement.create_table()
+    Feedback.drop_table()
+    Feedback.create_table()
+
 import random
 
 def random_name(bit, bit_min = 0, min_l = 2, max_l = 6):
@@ -57,6 +62,12 @@ memberships = []
 category_list = []
 co_list = []
 user_list = []
+
+def random_feed():
+    user = random.choice(user_list)
+    content = ' '.join(random_name(10))
+    feed = Feedback.create(user=user, content=content)
+    return feed
 
 def random_user():
     global memberships
@@ -151,6 +162,9 @@ def init_db():
 
     for u in user_list:
         random_order(u)
+
+    for i in range(20):
+        random_feed()
 
 if __name__ == '__main__':
     create_db()

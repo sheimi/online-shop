@@ -1,6 +1,6 @@
 <h3>{{title}}</h3>
 <hr/>
-<div id="rec-carousel" class="carousel slide">
+<div id="{{id}}-carousel" class="carousel slide">
   <div class="carousel-inner">
     {% for item in items%} 
     <div class="well  {% if loop.index == 1 %} active {% endif %} item">
@@ -12,6 +12,6 @@
     </div>
     {% endfor %}
   </div>
-  <a class="left carousel-control" href="#rec-carousel" data-slide="prev">&lsaquo;</a>
-  <a class="right carousel-control" href="#rec-carousel" data-slide="next">&rsaquo;</a>
+  <a class="left carousel-control" href="#{{id}}-carousel" data-slide="prev">&lsaquo;</a>
+  <a class="right carousel-control" href="#{{id}}-carousel" data-slide="next">&rsaquo;</a>
 </div>

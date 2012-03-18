@@ -84,7 +84,7 @@
     {% for comment in commodity.comments.order_by('date')|reverse%} 
       <div class="row">
         <div class="comment-user span2">
-          {{forms.bs_img('/static/img/profile/'+comment.user.id|string+'.png', id="profile-img")}}
+          {{forms.bs_img('/static/img/profile/'+comment.user.id|string+'.png', class="profile-img")}}
           <div class="comment-uesr-info">
             <span class="comment-label">User Name : </span>
             <span class="comment-username">{{comment.user.username}}</span>

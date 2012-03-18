@@ -63,6 +63,7 @@ var category = new (rest_creator('category'))()
 var member = new (rest_creator('member'))()
 var comment = new (rest_creator('commoditycomment'))()
 var address = new (rest_creator('address'))()
+var feedback = new (rest_creator('feedback'))()
 
 
 window.send_json = send_json
@@ -73,5 +74,6 @@ window.order_item = order_item
 window.address = address
 window.category = category
 window.commodity = commodity
+window.feedback = feedback
 
 }(window);

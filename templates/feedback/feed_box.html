@@ -1,0 +1,62 @@
+
+<div id="feed-box" style="z-index: 2000;opacity: 0; position: fixed; bottom: -800px; width: 600px; height: 540px; padding: 20px; font-size: 13px; border: solid #D2D2D2 1px; border-radius: 2px 0 0 2px; box-shadow: rgba(0, 0, 0, 0.0976563) 0px 0px 5px 0px;background-color:whiteSmoke;">
+  <div id="box-close" style="position: absolute; font-size: 30px; right: 10px; top: 10px; color: #ccc; cursor: pointer;">
+    &times;
+  </div>
+  <legend>Thanks For Your Feedback !!</legend>
+  <div id="feed-box-input">
+    <form>
+      <textarea id="feed-box-area" style="width: 580px; height: 100px"></textarea>
+      <a id="feed-box-render" class="btn btn-success btn-large" style="width: 560px;">
+        <i class="icon-white icon-comments"></i>
+        Render Your Feedback
+      </a>
+    </form>
+  </div>
+  <hr/>
+  <div id="feed-box-feeds" style="overflow: scroll; height: 290px;">
+  </div>
+</div>
+<div id="backdrop" style="position: fixed; left:0;right:0;top:0;bottom:0; background-color: rgba(222, 222, 222, 0.5); z-index: 1000"></div>
+<script>
+!function($) {
+  $("#feed-box-render").click(function() {
+    var value = $("#feed-box-area").val()
+    if (value == "") {
+      error.top_message("Please Fill Your Feedback In The White Box")
+    }
+    var render = {
+      content : value
+    }
+    if (user.id != undefined) {
+      render.user = user.id
+    } 
+    feedback.create(render).done(function(data) {
+      $.get('/feedback/feed/'+data.id).done(function(html) {
+        success.top_message("Feedback Sent Success")
+        var html = $(html) 
+        html.hide()
+        $(".feeds").prepend(html);
+        html.slideDown()
+      })
+    })
+  })
+  $("#feed-box-feeds").hide().load("{{url_for('.feeds')}}").fadeIn()
+  var window_width = $(window).width()
+  var box_width = $("#feed-box").width()
+  $("#feed-box").css("left", (window_width - box_width)/2)
+  $("#feed-box").animate({ opacity: 1, bottom: '+=830'}, 800)
+  $("#backdrop").hide().fadeIn()
+  function remove() {
+    $("#feed-box").animate({ opacity: 0, bottom: '-=830'}, 800, function(){
+      $(this).remove()
+    })
+    $("#backdrop").fadeOut(function() {
+      $(this).remove()
+    })
+  }
+  $("#box-close").click(remove)
+  $("#backdrop").click(remove)
+  
+}(jQuery)
+</script>

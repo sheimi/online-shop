@@ -29,6 +29,7 @@ def register_module():
     from views.commodity import commodity
     from views.cart import cart
     from views.admina import admina
+    from views.feedback import feedback
     from models import register_commodity, register_core, register_order
 
     app.register_blueprint(member, url_prefix='/member')
@@ -36,6 +37,7 @@ def register_module():
     app.register_blueprint(commodity, url_prefix='/commodity')
     app.register_blueprint(cart, url_prefix='/cart')
     app.register_blueprint(admina, url_prefix='/admina')
+    app.register_blueprint(feedback, url_prefix='/feedback')
 
     register_order(admin=admin, api=api)
     register_commodity(admin=admin, api=api)

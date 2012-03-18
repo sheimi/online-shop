@@ -1,0 +1,9 @@
+{% import 'imports/forms.html' as forms %}
+<div class="feeds">
+  {% for feed in feeds|reverse%} 
+    {% include "feedback/feed_item.html" %}
+    {% if not loop.last %}
+    <hr/>
+    {% endif %}
+  {% endfor %}
+</div>

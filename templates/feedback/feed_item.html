@@ -1,0 +1,19 @@
+{% import 'imports/forms.html' as forms %}
+<div class="row">
+  <div class="feed-user span2">
+    {% if feed.user %}
+      {{forms.bs_img('/static/img/profile/'+feed.user.id|string+'.png', class="profile-img")}}
+      <div class="feeds-uesr-info">
+        <span class="feeds-label">User Name : </span>
+        <span class="feeds-username">{{feed.user.username}}</span>
+      </div>
+    {% else %}
+      {{forms.bs_img('/static/img/profile/1.png', class="profile-img")}}
+    {% endif %}
+  </div>
+  <div class="feeds-feed span5">
+    <h6> feedback: </h6>
+    <p>{{feed.content}}</p>
+  </div>
+</div>
+<hr/>
