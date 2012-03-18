@@ -26,21 +26,32 @@
     $(this).addClass("hover")
   }, function() {
     $(this).removeClass("hover")
-    })
-  $(".thumbnail .i-choose").click(function(e) {
-    e.preventDefault()
-    var has = $(this).hasClass("choosed")
-    var item = $(this).parents(".thumbnail")
+  })
+
+  function mark_item(item) {
+    var has = $(item).hasClass("choosed")
+    var item_wrapper = $(item).parents(".thumbnail")
     if (has) {
-      compare.remove_item(item)
-      $(this).removeClass("choosed")
-      $(this).find('a span.text').text("Choose")
+      compare.remove_item(item_wrapper)
+      $(item).removeClass("choosed")
+      $(item).find('a span.text').text("Choose")
     } else {
-      if (compare.add_item(item)) {
-        $(this).addClass("choosed")
-        $(this).find('a span.text').text("Choosed")
+      if (compare.add_item(item_wrapper)) {
+        $(item).addClass("choosed")
+        $(item).find('a span.text').text("Choosed")
       }
     }
+  }
+
+  $(".thumbnail .img-link").click(function(e) {
+    e.preventDefault()
+    mark_item($(this).parents(".thumbnail").find(".i-choose"))
+  })
+  
+  
+  $(".thumbnail .i-choose").click(function(e) {
+    e.preventDefault()
+    mark_item(this)
   })
 }(jQuery)
 </script>

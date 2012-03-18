@@ -9,20 +9,20 @@
 <div class="well">
   {{global.bs_search_bar()}} 
   <div id="result" class="row">
-    <div id="result-wrapper" class="span9 columns">
-    </div>
-    <div id="result-nav" class="span2 columns">
+    <div id="result-nav" class="right columns">
       <ul class="nav nav-list">
         <li class="nav-header">Operations</li>
         <li id="compare-item"><a href="#">compare</li></li>
       </ul>
+    </div>
+    <div id="result-wrapper" class="span9 columns">
     </div>
   </div>
 </div>
 <script src="{{ url_for('static', filename='js/mine/core/compare.js') }}"></script>
 <script>
 !function($) {
-  $("#result-wrapper").load("{{url_for('core.com_list')}}")
+  $("#result-wrapper").load("{{url_for('core.search_commodity', q=query)}}")
   $.get("{{url_for('core.com_filter_list')}}").done(function(data) {
     $("#result-nav ul").prepend(data)
   })
@@ -30,6 +30,25 @@
     e.preventDefault()
     compare.compare()
   })
+
+  function start_query() {
+    var query = $("#search-commodity-input").val()
+    if (query == "") {
+      error.top_message("Fill the query first")
+      return
+    }
+    $("#result-wrapper").fadeOut(function() {
+      $(this).load("{{url_for('core.search_commodity')}}?q="+query, function() {
+        $(this).fadeIn()
+      })
+    })
+  }
+  $("#search-commodity-input").keydown(function(e) {
+    if (e.keyCode == 13) {
+      start_query()
+    }
+  })
+  $("#search-commodity-btn").click(start_query)
 }(jQuery)
 </script>
 {% endblock %}

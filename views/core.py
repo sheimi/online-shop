@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, g, session, jsonify, request,\
         redirect, url_for
 from models import *
 from util.auth import login_required, get_object_or_404
+from whoosh.index import open_dir
+from whoosh.qparser import MultifieldParser
+from peewee import Q
 
 core = Blueprint('core', __name__)
 
@@ -16,7 +19,8 @@ def recommend():
 
 @core.route('/result')
 def result():
-    return render_template('core/result.html')
+    query = request.args.get('q', None)
+    return render_template('core/result.html', query=query)
 
 @core.route('/com_list')
 def com_list():
@@ -34,6 +38,37 @@ def compare_box():
     c2 = get_object_or_404(Commodity, id=request.args.get("c2"))
     return render_template('core/compare_box.html', c1=c1, c2=c2)
 
+@core.route('/search')
+def search_commodity():
+    from shop import app
+    ix = open_dir(app.config.get("INDEX_DIR"))
+    searcher = ix.searcher()
+    mparser = MultifieldParser(["content", "title"], schema=ix.schema)
+
+    query_raw = request.args.get('q', '')
+    query = mparser.parse(unicode(query_raw.lower()))
+    results = searcher.search(query)
+    
+    result_id = []
+    for result in results:
+        result_id.append(int(result['id']))
+    
+    result_id = list(set(result_id))
+    wq = None
+    for rid in result_id:
+        if not wq:
+            wq = Q(id=rid)
+        else:
+            wq |= Q(id=rid)
+    if wq:
+        coms = Commodity.select().where(wq)
+    else:
+        coms = [] 
+    return render_template('core/com_list.html', commodities=coms)
+
+
+
+# the account operations
 @core.route('/account')
 def account():
     kwargs = {

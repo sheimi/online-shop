@@ -362,3 +362,9 @@ span.item-img {
 #result-nav {
   width: 180px;
 }
+
+/** compare box **/
+.compare-item, .compare-info, .operation {
+  margin-left: 50px !important;
+}
+
