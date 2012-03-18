@@ -354,7 +354,7 @@ span.item-img {
 .thumbnail.choosed {
   border: 1px solid red; 
 }
-.thumbnail span.choosed a {
+.thumbnail .choosed a {
   color: red;
 }
 .thumbnail .i-detail {

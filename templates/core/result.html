@@ -31,23 +31,10 @@
   $.get("{{url_for('core.com_filter_list')}}").done(function(data) {
     $("#result-nav ul").prepend(data)
   })
-  $("#compare-item").click(function(e) {
-    e.preventDefault()
-    compare.compare()
-  })
-  $("#cancel-all").click(function(e) {
-    e.preventDefault()
-    compare.cancel_all()
-  })
 
   function start_query() {
     var query = $("#search-commodity-input").val()
-    /*
-    if (query == "") {
-      error.top_message("Fill the query first")
-      return
-    }
-    */
+
     $("#result-wrapper").fadeOut(function() {
       var url = ""
       if (query == "") {

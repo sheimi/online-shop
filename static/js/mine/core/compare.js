@@ -53,4 +53,47 @@
     }
   }
   window.compare = compare
+  
 }(window, jQuery)
+
+!function($) {
+  $(".thumbnail").live('hover', function() {
+    $(this).addClass("hover")
+  }, function() {
+    $(this).removeClass("hover")
+  })
+  function mark_item(item) {
+    var has = $(item).hasClass("choosed")
+    var item_wrapper = $(item).parents(".thumbnail")
+    if (has) {
+      compare.remove_item(item_wrapper)
+      $(item).removeClass("choosed")
+      $(item).find('a span.text').text("Choose Me")
+    } else {
+      if (compare.add_item(item_wrapper)) {
+        $(item).addClass("choosed")
+        $(item).find('a span.text').text("Choosed")
+      }
+    }
+  }
+
+  $(".thumbnail .img-link").live('click', function(e) {
+    e.preventDefault()
+    mark_item($(this).parents(".thumbnail").find(".i-choose"))
+  })
+  
+  
+  $(".thumbnail .i-choose").live('click', function(e) {
+    e.preventDefault()
+    mark_item(this)
+  })
+
+  $("#compare-item").click(function(e) {
+    e.preventDefault()
+    compare.compare()
+  })
+  $("#cancel-all").click(function(e) {
+    e.preventDefault()
+    compare.cancel_all()
+  })
+}(jQuery)
