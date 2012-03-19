@@ -27,13 +27,12 @@ div.search-wrapper {
 div#right-sider {
   position: absolute;
   width: 240px; 
-  margin-top: 40px;
+  margin-top: 33px;
   margin-left: 900px;
 }
 
 #compare-operations.fixed {
   position: fixed;
   top: 100px;
-  right: 78px;
   width: 200px;
 }

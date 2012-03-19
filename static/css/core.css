@@ -370,8 +370,8 @@ span.item-img {
 #result-nav.fixed {
   position: fixed;
   top: 100px;
-  right: 178px;
   width: 180px;
+  margin-left: 740px;
 }
 
 /** compare box **/
