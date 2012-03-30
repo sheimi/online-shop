@@ -2,7 +2,7 @@ import functools
 import os
 from flask import Blueprint, render_template, request, session,\
                   flash, redirect, url_for, g
-from peewee import CharField, BooleanField 
+from peewee import CharField, BooleanField
 from flask_peewee.utils import get_next  # , make_password, check_password
 
 
