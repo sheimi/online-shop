@@ -1,8 +1,13 @@
 #!/bin/env python
-from shop import db
-from models import *
-from peewee import *
+from models.core import User, Member, Address
+from models.attachment import Announcement, Feedback
+from models.commodity import Category, Commodity, CommodityImage, \
+                             CommodityComment
+from models.order import OrderStatus, UserOrder, OrderItem
+from datetime import datetime as dt
 import string
+import random
+
 
 def create_db():
     User.drop_table()
@@ -22,7 +27,7 @@ def create_db():
 
     OrderItem.drop_table()
     OrderItem.create_table()
-    
+
     CommodityImage.drop_table()
     CommodityImage.create_table()
 
@@ -40,11 +45,12 @@ def create_db():
     Feedback.drop_table()
     Feedback.create_table()
 
-import random
 
-def random_name(bit, bit_min = 0, min_l = 2, max_l = 6):
+def random_name(bit, bit_min=0, min_l=2, max_l=6):
     for b in range(bit_min, bit):
-        yield ''.join(random.choice(string.ascii_letters) for x in range(random.randint(min_l, max_l))) 
+        yield ''.join(random.choice(string.ascii_letters) \
+                      for x in range(random.randint(min_l, max_l)))
+
 
 def random_img():
     img = ['Fresh_Fruit_dessert_photo_JT002_350A1024768.jpg',
@@ -52,10 +58,12 @@ def random_img():
            'Fruit_dessert_eastern.jpg',
            'chocolate-fruit-n-nut-cases200812311.jpg',
            'Ice_Cream_dessert_02.jpg',
-           'elegantlemonjellocreamdessertc2a9m-jdemesterton8-29-201012-54-30pm.jpg',
+           'elegantlemonjellocreamdessertc2a9m-'
+           'jdemesterton8-29-201012-54-30pm.jpg',
            'Summer_Fruit_Dessert.jpg',
-           'ua-chocolate-delight-dessert-1067.JPG',]
-    return random.choice(img) 
+           'ua-chocolate-delight-dessert-1067.JPG']
+    return random.choice(img)
+
 
 status_list = []
 memberships = []
@@ -63,22 +71,26 @@ category_list = []
 co_list = []
 user_list = []
 
+
 def random_feed():
     user = random.choice(user_list)
     content = ' '.join(random_name(10))
     feed = Feedback.create(user=user, content=content)
     return feed
 
+
 def random_user():
     global memberships
     global user_list
     username = ' '.join(random_name(2))
     password = 'zhang'
-    user = User.create(username=username, password=password, membership=random.choice(memberships))
+    user = User.create(username=username, password=password,
+                       membership=random.choice(memberships))
     #user.set_password("zhang")
     #user.save()
     user_list.append(user)
     return user
+
 
 def random_cat():
     global category_list
@@ -87,34 +99,37 @@ def random_cat():
     category_list.append(cat)
     return cat
 
+
 def random_co():
     global category_list
     global co_list
     name = ' '.join(random_name(1))
-    co = Commodity.create(price=random.randint(20, 100), name=name, category=random.choice(category_list))
-    img = CommodityImage.create(name=random_img(), commodity=co)
+    co = Commodity.create(price=random.randint(20, 100), name=name,
+                          category=random.choice(category_list))
+    CommodityImage.create(name=random_img(), commodity=co)
     co_list .append(co)
     return co
+
 
 def random_oi(order):
     global co_list
     co = random.choice(co_list)
     num = random.randint(1, 4)
-    price = co.price 
+    price = co.price
     oi = OrderItem.create(commodity=co, num=num, price=price, order=order)
     return oi
 
-from datetime import datetime as dt
+
 def random_order(user):
     global status_list
     status = random.choice(status_list)
     kwargs = {
-        'user'  : user,
-        'status' : status,
+        'user': user,
+        'status': status,
     }
     if not status.name == "init":
         kwargs['is_confirmed'] = True
-        kwargs['confirm_date']=dt.today()
+        kwargs['confirm_date'] = dt.today()
     if status.name == "complete" or status.name == "canceled":
         kwargs['is_compelete'] = True
         kwargs['compelete_date'] = dt.today()
@@ -122,6 +137,7 @@ def random_order(user):
     for i in range(2, 10):
         random_oi(order)
     return order
+
 
 def init_db():
     #init status
@@ -144,7 +160,8 @@ def init_db():
     memberships += [member1, member2, member3, member4]
 
     #init user
-    user = User.create(username="sheimi", password="zhang", admin=True)
+    User.create(username="sheimi", password="zhang", admin=True)
+    #user = User.create(username="sheimi", password="zhang", admin=True)
     #user.set_password("zhang")
     #user.save()
 

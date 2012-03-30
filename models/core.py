@@ -1,8 +1,10 @@
 from shop import db
-from peewee import *
+from peewee import CharField, IntegerField, BooleanField,\
+                   DateTimeField, ForeignKeyField
 from views.auth import BaseUser
 import datetime
 from views.admin import ModelAdmin
+
 
 class Member(db.Model):
 
@@ -11,6 +13,7 @@ class Member(db.Model):
 
     def __unicode__(self):
         return "%s" % (self.name)
+
 
 class User(db.Model, BaseUser):
 
@@ -22,7 +25,8 @@ class User(db.Model, BaseUser):
     admin = BooleanField(default=False)
     age = IntegerField(default=0)
     address = CharField(null=True)
-    gender = IntegerField(default=0) #0: secrete,  1: boy   2: girl
+    #0: secrete, 1: boy, 2: girl
+    gender = IntegerField(default=0)
 
     membership = ForeignKeyField(Member, related_name='users', null=True)
 
@@ -33,8 +37,11 @@ class User(db.Model, BaseUser):
         return self.comments.filter(commodity__id=commodity.id).count() > 0
 
     def can_comment(self, commodity):
-        return commodity.order_items.filter(order__user__id =self.id, order__status=3).count() > 0 \
-                and not self.has_comment(commodity)
+        return commodity.order_items.filter(order__user__id=self.id,
+                                            order__status=3)\
+                                    .count() > 0 and not\
+                                    self.has_comment(commodity)
+
 
 class Address(db.Model):
     columns = ('user', 'address',)
@@ -48,21 +55,24 @@ class Address(db.Model):
     def __unicode__(self):
         return "%s " % (self.user)
 
+
 class MemberAdmin(ModelAdmin):
     columns = ('name', 'discount')
+
 
 class UserAdmin(ModelAdmin):
     columns = ('username', 'active', 'membership')
 
+
 class AddressAdmin(ModelAdmin):
     columns = ('user', 'address')
+
 
 def register_core(**regs):
     regs['admin'].register(Address, AddressAdmin)
     regs['admin'].register(User, UserAdmin)
     regs['admin'].register(Member, MemberAdmin)
-    
+
     regs['api'].register(Address)
     regs['api'].register(User)
     regs['api'].register(Member)
-

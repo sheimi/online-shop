@@ -10,18 +10,19 @@ app = Flask(__name__)
 app.config.update(
     DEBUG=True,
     SQLALCHEMY_DATABASE_URI='sqlite:///models/shop.db',
-    SECRET_KEY = 'development key',
-    DATABASE = {
-        'name'  :   'models/shop.db',
-        'engine':   'peewee.SqliteDatabase',
+    SECRET_KEY='development key',
+    DATABASE={
+        'name': 'models/shop.db',
+        'engine': 'peewee.SqliteDatabase',
     },
-    INDEX_DIR = 'indexdir',
+    INDEX_DIR='indexdir',
 )
 
 db = Database(app)
 auth = Auth(app, db)
 admin = Admin(app, auth)
 api = RestAPI(app, default_auth=UserAuthentication(auth))
+
 
 def register_module():
     from views.core import core
@@ -30,7 +31,10 @@ def register_module():
     from views.cart import cart
     from views.admina import admina
     from views.feedback import feedback
-    from models import register_commodity, register_core, register_order, register_attachment
+    from models.commodity import register_commodity
+    from models.core import register_core
+    from models.order import register_order
+    from models.attachment import register_attachment
 
     app.register_blueprint(member, url_prefix='/member')
     app.register_blueprint(commodity, url_prefix='/commodity')
@@ -47,9 +51,10 @@ def register_module():
     admin.setup()
     api.setup()
 
+
 @app.before_request
 def before_request():
-    from models import User
+    from models.core import User
     if 'user_pk' in session:
         try:
             g.user = User.select().get(id=int(session['user_pk']))

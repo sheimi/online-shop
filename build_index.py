@@ -1,11 +1,12 @@
 #!/bin/env python
 '''
-This file is to create the index of commodities 
+This file is to create the index of commodities
 '''
-from models import *
+from models import Commodity, CommodityComment
 from whoosh.index import create_in
-from whoosh.fields import *
+from whoosh.fields import TEXT, ID, Schema
 from shop import app
+
 
 def travel_commodity(writer):
     commodities = Commodity.select()
