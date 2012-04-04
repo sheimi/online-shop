@@ -1,8 +1,9 @@
 import functools
 import os
-from flask import Blueprint, render_template, request, session,\
-                  flash, redirect, url_for, g
-from peewee import CharField, BooleanField
+from flask import Blueprint, render_template, abort, request, session, flash, redirect, url_for, g
+from peewee import *
+from wtforms import Form, TextField, PasswordField, validators
+
 from flask_peewee.utils import get_next  # , make_password, check_password
 
 

@@ -1,17 +1,39 @@
 import functools
 import os
 import re
-from flask import Blueprint, render_template, abort, request, url_for,\
-                    redirect, flash
-from flask_peewee.forms import CustomModelConverter
-from flask_peewee.filters import QueryFilter
+
+from flask import Blueprint, render_template, abort, request, url_for, redirect, flash, Response
+from flask_peewee.filters import BooleanSelectField, QueryFilter
+from flask_peewee.serializer import Serializer
 from flask_peewee.utils import get_next, PaginatedQuery, slugify
-from wtfpeewee.orm import model_form
-from peewee import ForeignKeyField
+from peewee import BooleanField, ForeignKeyField, TextField, Q
+from werkzeug import Headers
+from wtforms import fields, widgets
+from wtfpeewee.orm import model_form, ModelConverter, ModelSelectField
 
 
 current_dir = os.path.dirname(__file__)
 
+
+class CustomModelConverter(ModelConverter):
+    def __init__(self, model_admin, additional=None):
+        super(CustomModelConverter, self).__init__(additional)
+        self.model_admin = model_admin
+        self.converters[BooleanField] = self.handle_boolean
+    
+    def handle_boolean(self, model, field, **kwargs):
+        return field.name, BooleanSelectField(**kwargs)
+    
+    def handle_foreign_key(self, model, field, **kwargs):
+        if field.null:
+            kwargs['allow_blank'] = True
+        
+        if field.name in (self.model_admin.raw_id_fields or ()):
+            # use a different widget here
+            form_field = ModelSelectField(model=field.to, **kwargs)
+        else:
+            form_field = ModelSelectField(model=field.to, **kwargs)
+        return field.name, form_field
 
 class ModelAdmin(object):
     """
@@ -56,6 +78,7 @@ class ModelAdmin(object):
         return self.get_query().get(**{self.pk_name: pk})
 
     def get_query_filter(self, query):
+        print query
         return QueryFilter(query,
             self.exclude_filter_fields,
             self.ignore_filters,

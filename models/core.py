@@ -27,6 +27,7 @@ class User(db.Model, BaseUser):
     address = CharField(null=True)
     #0: secrete, 1: boy, 2: girl
     gender = IntegerField(default=0)
+    point = IntegerField(default=0)
 
     membership = ForeignKeyField(Member, related_name='users', null=True)
 

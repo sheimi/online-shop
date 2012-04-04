@@ -29,6 +29,9 @@
     <li {% if index %}class="active" {% endif %}>
       {{ forms.bs_link('Index', icolor="black", itype="home", href=url_for('core.index'))}} 
     </li>
+    <li>
+      {{ forms.bs_link('Forum', icolor="black", itype="comments", href='http://localhost:8000')}} 
+    </li>
   </ul>
   <div class="navbar-search pull-left">
     {{forms.input('','global-search', class="search-query",type='search', other='placeholder="Search"')}}
