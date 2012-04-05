@@ -153,10 +153,12 @@ def init_db():
     s_canceled = OrderStatus.create(name="canceled")
     status_list += [s_init, s_confirmed, s_sent, s_complete, s_canceled]
 
-    member1 = Member.create(name="vip1")
-    member2 = Member.create(name="vip1")
-    member3 = Member.create(name="vip1")
-    member4 = Member.create(name="vip1")
+    member0 = Member.create(name="normal", point=1000, discount=100)
+    member1 = Member.create(name="vip1", point=2000,  discount=90)
+    member2 = Member.create(name="vip2", point=3000, discount=80)
+    member3 = Member.create(name="vip3", point=4000, discount=70)
+    member4 = Member.create(name="vip4", point=5000, discount=60)
+    member5 = Member.create(name="vip5", point=-1, discount=50)
     memberships += [member1, member2, member3, member4]
 
     #init user

@@ -2,7 +2,7 @@
 '''
 This file is to create the index of commodities
 '''
-from models import Commodity, CommodityComment
+from models.commodity import Commodity, CommodityComment
 from whoosh.index import create_in
 from whoosh.fields import TEXT, ID, Schema
 from shop import app

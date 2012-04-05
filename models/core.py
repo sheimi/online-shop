@@ -9,6 +9,7 @@ from views.admin import ModelAdmin
 class Member(db.Model):
 
     name = CharField()
+    point = IntegerField(default=0)
     discount = IntegerField(default=100)
 
     def __unicode__(self):
@@ -43,6 +44,12 @@ class User(db.Model, BaseUser):
                                     .count() > 0 and not\
                                     self.has_comment(commodity)
 
+    def check_membership(self):
+        members = list(Member.select().order_by("point"))[1:]
+        for member in members:
+            if self.point < member.point:
+                return member
+        return members[-1]
 
 class Address(db.Model):
     columns = ('user', 'address',)

@@ -33,6 +33,9 @@ class UserOrder(db.Model):
     status = ForeignKeyField(OrderStatus, related_name='orders', default=1)
 
     def total_price(self):
+        return self.total_price_raw() * self.discount / 100
+
+    def total_price_raw(self):
         return sum([x.total_price() for x in self.items])
 
     def __unicode__(self):

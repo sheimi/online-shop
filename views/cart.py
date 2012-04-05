@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, g, jsonify, request,\
         redirect, url_for
 from models.order import UserOrder, OrderItem, OrderStatus
+from models.core import User
 from models.commodity import Commodity
 from datetime import datetime as dt
 from util.auth import get_object_or_404
@@ -14,7 +15,8 @@ def cart_tool():
         return ""
     order = g.user.orders.where(is_confirmed=False).execute().first()
     if not order:
-        order = UserOrder.create(user=g.user)
+        order = UserOrder.create(user=g.user,
+                                 discount=g.user.check_membership().discount)
     g.user.cart = order
     num = order.items.count()
     return render_template('cart/tool.html', user=g.user, num=num)
@@ -72,4 +74,7 @@ def confirm_all(order_id):
     status = get_object_or_404(OrderStatus, name="confirmed")
     UserOrder.update(is_confirmed=True, status=status,
                      confirm_date=dt.today()).where(id=order_id).execute()
+    point = g.user.point
+    point += order.total_price()
+    User.update(point=point).where(id=g.user.id).execute()
     return render_template('cart/success.html', user=g.user, order=order)

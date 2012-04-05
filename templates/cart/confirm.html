@@ -63,6 +63,9 @@
               <li>{{oi.total_price()}}</li>
               {% endfor %}
               <hr/>
+              <li>Total: &nbsp; &nbsp;${{order.total_price_raw()}}</li>
+              <li>&times; &nbsp; &nbsp; {{order.discount}}</li>
+              <hr/>
               <li>Total: &nbsp; &nbsp;${{order.total_price()}}</li>
             </ul>
           </div>

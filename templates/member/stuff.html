@@ -5,6 +5,12 @@
         {% call forms.bs_ctrgroup('Username') %}
           {{forms.input('username', 'account-username', value=user.username, other='placeholder="User Name"')}}
         {% endcall %}
+        {% call forms.bs_ctrgroup('Points') %}
+          {{forms.input('points', 'account-points', value=user.point|string, other='disabled')}}
+        {% endcall %}
+        {% call forms.bs_ctrgroup('Membership') %}
+          {{forms.input('membership', 'account-membership', value=user.check_membership().name, other='disabled')}}
+        {% endcall %}
         {% call forms.bs_ctrgroup('Age') %}
           {{forms.input('age', 'account-age', value=user.age, other='placeholder="Age"')}}
         {% endcall %}

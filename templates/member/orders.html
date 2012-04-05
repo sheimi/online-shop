@@ -38,7 +38,11 @@
                 <span class="label">{{order.status.name}}</span>
               </td>
               <td><h5>Total Price</h5></td>
-              <td><span class="label label-info">${{order.total_price()}}</span></td>
+              <td>
+                <span class="label label-info">$<span class="all-price">{{order.total_price_raw()}}</span></span> &times;
+                <span class="label label-info"><span class="discount">{{order.discount}}%</span></span> =
+                <span class="label label-info">$<span class="all-price">{{order.total_price()}}</span></span>
+              </td>
             </tr>
           </tbody>
         </table>

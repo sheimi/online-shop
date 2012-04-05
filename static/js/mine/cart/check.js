@@ -4,13 +4,14 @@ $(document).ready(function() {
       var item_id = parseInt($(this).attr('data-id'))
       var selected = this
       order_item.update(item_id, {num:num}).done(function(data) {
-        console.log(data) 
-        console.log($(selected).parents('tr'))
         var price = parseInt($(selected).parents('tr').find('.total-price').text())
+        var discount = parseInt($('.discount').text())
         var new_price = data.num * data.price
         var total = parseInt($('.all-price').text())
+        var total_raw = parseInt($('.raw-price').text())
         $(selected).parents('tr').find('.total-price').text(new_price)
-        $('.all-price').text(total + new_price - price)
+        $('.raw-price').text(total_raw + new_price - price)
+        $('.all-price').text(total + parseInt((new_price - price) * discount / 100))
         success.top_message("Your Order has Successfully Changed")
       })
     })

@@ -182,11 +182,13 @@ class ModelAdmin(object):
 
         if request.method == 'POST':
             form = Form(request.form, obj=instance)
+            print form.validate()
             if form.validate():
                 self.save_model(instance, form, False)
                 flash('Changes to %s saved successfully'\
                         % self.get_display_name(), 'success')
                 return self.dispatch_save_redirect(instance)
+            raise Exception
         else:
             form = Form(obj=instance)
             class_name = self.model.__name__

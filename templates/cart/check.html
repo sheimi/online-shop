@@ -43,7 +43,11 @@
           {% endif %}
         </td>
         <td><h5>Total Price</h5></td>
-        <td><span class="label label-info">$<span class="all-price">{{order.total_price()}}</span></span></td>
+        <td>
+          <span class="label label-info">$<span class="raw-price">{{order.total_price_raw()}}</span></span> &times;
+          <span class="label label-info"><span class="discount">{{order.discount}}%</span></span> =
+          <span class="label label-info">$<span class="all-price">{{order.total_price()}}</span></span>
+        </td>
         <td>
           {{ forms.bs_link("Confirm & Pay Your Order", href=url_for('cart.check_address', order_id=order.id), class="btn btn-success", icolor="white", itype="shopping-cart", other='id="confirm-order"')}}
         </td>
