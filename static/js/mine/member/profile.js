@@ -1,6 +1,6 @@
 !function($) {
   $('#img-uploader').change(function() {
-    $(this).upload('{{url_for("member.image_upload")}}', function(data){
+    $(this).upload('/profile/img', function(data){
       var img = $("#profile-img")
       var src = img.attr('src')
       src += '?' + new Date().getTime()
@@ -16,7 +16,7 @@
       email: $("#account-email").val(),
       address: $("#account-address").val()
     }
-    user.update({{user.id}}, data).done(function(data){
+    user.update(user.id, data).done(function(data){
       success.top_message("Account Information Update Success")
     }).fail(function() {
       error.top_message("Account Information Update Fail")
@@ -24,8 +24,8 @@
   })
 
   $("#account-delete").click(function() {
-    user.delete({{user.id}}).done(function() {
-      location.href="{{url_for('core.logout')}}"
+    user.delete(user.id).done(function() {
+      location.href="/core/logout"
     })
   })
 
@@ -43,7 +43,7 @@
     var data = {
       password: p1 
     }
-    user.update({{user.id}}, data).done(function(data) {
+    user.update(user.id, data).done(function(data) {
       success.top_message("Password Information Update Success")
     }).fail(function() {
       error.top_message("Password Information Update Fail")
