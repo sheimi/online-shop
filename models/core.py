@@ -39,8 +39,9 @@ class User(db.Model, BaseUser):
         return self.comments.filter(commodity__id=commodity.id).count() > 0
 
     def can_comment(self, commodity):
+        print commodity.order_items.filter(order__user__id=self.id).count() 
         return commodity.order_items.filter(order__user__id=self.id,
-                                            order__status=3)\
+                                            order__status=4)\
                                     .count() > 0 and not\
                                     self.has_comment(commodity)
 

@@ -24,7 +24,7 @@ class UserOrder(db.Model):
     is_confirmed = BooleanField(default=False)
     #is the order conplete
     is_complete = BooleanField(default=False)
-    #0: init  1: confirmed 2: sent 3: completed 4:canceled
+    #1: init  2: confirmed 3: sent 4: completed 5:canceled
     status = IntegerField(default=0)
     discount = IntegerField(default=100)
 

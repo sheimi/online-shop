@@ -10,39 +10,33 @@ import random
 
 
 def create_db():
-    User.drop_table()
+    try:
+        User.drop_table()
+        Member.drop_table()
+        Commodity.drop_table()
+        Category.drop_table()
+        UserOrder.drop_table()
+        OrderItem.drop_table()
+        CommodityImage.drop_table()
+        CommodityComment.drop_table()
+        Address.drop_table()
+        OrderStatus.drop_table()
+        Announcement.drop_table()
+        Feedback.drop_table()
+    except:
+        pass
+
     User.create_table()
-
-    Member.drop_table()
     Member.create_table()
-
-    Commodity.drop_table()
     Commodity.create_table()
-
-    Category.drop_table()
     Category.create_table()
-
-    UserOrder.drop_table()
     UserOrder.create_table()
-
-    OrderItem.drop_table()
     OrderItem.create_table()
-
-    CommodityImage.drop_table()
     CommodityImage.create_table()
-
-    CommodityComment.drop_table()
     CommodityComment.create_table()
-
-    Address.drop_table()
     Address.create_table()
-
-    OrderStatus.drop_table()
     OrderStatus.create_table()
-
-    Announcement.drop_table()
     Announcement.create_table()
-    Feedback.drop_table()
     Feedback.create_table()
 
 
