@@ -1,0 +1,43 @@
+{% import 'imports/forms.html' as forms %}
+{% extends "admin/base.html" %}
+{% block content_title %}Charts and Forms{% endblock %} 
+{% block content_tagline %}{% endblock %}
+{% block breadcrumbs %}
+<li>
+  <span class="divider">/</span>
+  <a href="{{url_for('admina.forms')}}">Forms</a>
+</li>
+{% endblock %}
+{% block pre_content %}{% endblock %}
+{% block content %}
+<script src="{{url_for('static', filename='hc/js/highcharts.js')}}"></script>
+<script src="{{url_for('static', filename='hc/js/modules/exporting.js')}}"></script>
+
+<div id="main-content">
+  <div id="order-pills">
+    {% call forms.bs_pills() %}
+      {{forms.bs_pills_item("Day", class="chart-triggler pill", other='href="'+url_for("admina.order_line", line_type='day_line')+'"')}}
+      {{forms.bs_pills_item("Month", class="chart-triggler pill active", other='href="'+url_for("admina.order_line", line_type='month_line')+'"')}}
+      {{forms.bs_pills_item("Season", class="chart-triggler pill", other='href="'+url_for("admina.order_line", line_type='season_line')+'"')}}
+    {% endcall %}
+  </div>
+  <div id="chart-container">
+  </div>
+</div>
+<script>
+$(document).ready(function() {
+  $(".chart-triggler").click(function(e) {
+    e.preventDefault()
+    var select = this
+    $.getScript($(this).attr("href"))
+    $(".chart-triggler").each(function() {
+      $(this).removeClass("active")
+    })
+    $(this).addClass("active")
+
+  })
+  $.getScript("{{url_for("admina.order_line", line_type='month_line')}}")
+})
+</script>
+{% endblock %}
+

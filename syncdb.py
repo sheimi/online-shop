@@ -131,8 +131,8 @@ def random_order(user):
         kwargs['is_confirmed'] = True
         kwargs['confirm_date'] = dt.today()
     if status.name == "complete" or status.name == "canceled":
-        kwargs['is_compelete'] = True
-        kwargs['compelete_date'] = dt.today()
+        kwargs['is_complete'] = True
+        kwargs['complete_date'] = dt.today()
     order = UserOrder.create(**kwargs)
     for i in range(2, 10):
         random_oi(order)

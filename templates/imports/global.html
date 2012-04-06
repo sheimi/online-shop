@@ -112,3 +112,12 @@
 }(jQuery)
 </script>
 {% endmacro %}
+
+{% macro meta_info(name, content) %}
+<meta name="{{name}}" content="{{content}}" />
+{% endmacro %}
+
+{% macro meta_keyword(content) %}
+{{meta_info("keywords", content)}}
+{% endmacro %}
+

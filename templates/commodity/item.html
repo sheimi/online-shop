@@ -10,7 +10,11 @@
 {% endmacro %}
 
 
-{% block page_title %}ADS{% endblock %}
+{% block page_title %}commodity.name{% endblock %}
+{% block meta %}
+{{global.meta_keyword("Buybuy,Largest,Online,Shop,"+commodity.name)}}
+{{global.meta_info("description", "Buybuy, the largest online shop in the world. "+commodity.des)}}
+{% endblock %}
 
 {% block container%}
 <div class="well">

@@ -1,9 +1,15 @@
 {% extends "base.html" %}
+{% import 'imports/global.html' as global%}
 
 {% block ext_scrpt %}
 <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}" />
 {% endblock %}
-{% block page_title %}ADS{% endblock %}
+{% block page_title %}Index{% endblock %}
+
+{% block meta %}
+{{global.meta_keyword("Buybuy,Largest,Online,Shop")}}
+{{global.meta_info("description", "Buybuy, the largest online shop in the world")}}
+{% endblock %}
 
 {% block container%}
 <div id="right-sider">

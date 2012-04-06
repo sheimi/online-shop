@@ -68,3 +68,71 @@ def image_upload(com_id):
 
     datafile.save(path)
     return jsonify(success=True, url=url, img_id=img.id)
+
+
+#all kinds of forms
+@admina.route('/forms')
+@admin_required
+def forms():
+    return render_template('admin/admina/forms.html')
+
+
+
+@admina.route('/forms/<line_type>/order-line.js')
+def order_line(line_type):
+
+    def get_month(month):
+        month_list = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        return month_list[month-1]
+
+    def day_line(orders):
+        render = {}
+        for order in orders:
+            month = order.complete_date.month
+            day = order.complete_date.day
+            key = month * 40 + day 
+            if key in render.keys():
+                render[key]['num'] += order.total_price() 
+            else:
+                render[key] = {
+                    'key': "%s %d" % (get_month(month), day),
+                    'num': order.total_price(),
+                }
+        return render
+
+    def month_line(orders):
+        render = {}
+        for order in orders:
+            month = order.complete_date.month
+            key = month
+            if key in render.keys():
+                render[key]['num'] += order.total_price()
+            else:
+                render[key] = {
+                    'key': get_month(month),
+                    'num': order.total_price(),
+                }
+        return render
+
+    def season_line(orders):
+        render = {}
+        for order in orders:
+            month = order.complete_date.month
+            key = (month - 1) / 3
+            if key in render.keys():
+                render[key]['num'] += order.total_price()
+            else:
+                render[key] = {
+                    'key': key,
+                    'num': order.total_price(),
+                }
+        return render
+
+    orders = UserOrder.select().filter(is_complete=True)
+    render = locals()[line_type](orders)
+    so = render.items()
+    result = sorted(so, key=lambda a: a[0])
+    return render_template('admin/admina/form_js/line.js',
+                           title="The Chart For Sell",
+                           items=result)

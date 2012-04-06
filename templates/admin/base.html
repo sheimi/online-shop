@@ -52,6 +52,7 @@
               <li class="nav-header">Manage Site</li>
               <li {% if order_page %} class="active" {% endif %}><a href="{{url_for('admina.orders')}}">Orders</a></li>
               <li {% if category_page %} class="active" {% endif %}><a href="{{url_for('admina.categories')}}">Categories</a></li>
+              <li {% if form_page %} class="active" {% endif %}><a href="{{url_for('admina.forms')}}">Forms</a></li>
               <li class="nav-header">Manage Items</li>
               {% for iter_admin in model_admins %}
                 <li{% if model_admin == iter_admin %} class="active"{% endif %}><a href="{{ url_for(iter_admin.get_url_name('index')) }}">{{ iter_admin.get_admin_name()|fix_underscores }}</a></li>
