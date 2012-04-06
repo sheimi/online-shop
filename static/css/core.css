@@ -379,3 +379,6 @@ span.item-img {
   margin-left: 50px !important;
 }
 
+.navbar-inner {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#44DDAA00', endColorstr='#44CC9900', GradientType=0) !important;
+}

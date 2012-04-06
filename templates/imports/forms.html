@@ -23,7 +23,7 @@
 
 {% macro bs_img_call(src, href="", class="", id="", other="") %}
 <div class="thumbnail {{class}}" {{other|safe}}>
-  <a class="img-link" style="display: table-cell" {% if href %} href="{{href}}" {%endif%}>
+  <a class="img-link" {% if href %} href="{{href}}" {%endif%}>
     <img src="{{src}}" {% if id %}id="{{id}}" {%endif%}/>
   </a>
   <div class="caption">
