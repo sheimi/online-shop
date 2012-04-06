@@ -84,7 +84,7 @@
 </div>
 <script>
 !function($) {
-  $.getJSON('/api/category').done(function(obj) {
+  $.getJSON('/api/category/').done(function(obj) {
     objs = obj.objects
     function make_option(val, text) {
       return "<option value=\""+val+"\">"+text+"</option>"

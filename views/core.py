@@ -54,7 +54,8 @@ def get_anno():
 @core.route('/result')
 def result():
     query = request.args.get('q', None)
-    return render_template('core/result.html', query=query)
+    cat = request.args.get('c', None)
+    return render_template('core/result.html', query=query, cat=cat)
 
 
 @core.route('/com-list')
@@ -84,24 +85,30 @@ def search_commodity():
     mparser = MultifieldParser(["content", "title"], schema=ix.schema)
 
     query_raw = request.args.get('q', '')
-    query = mparser.parse(unicode(query_raw.lower()))
-    results = searcher.search(query)
+    if query_raw:
+        query = mparser.parse(unicode(query_raw.lower()))
+        results = searcher.search(query)
 
-    result_id = []
-    for result in results:
-        result_id.append(int(result['id']))
+        result_id = []
+        for result in results:
+            result_id.append(int(result['id']))
 
-    result_id = list(set(result_id))
-    wq = None
-    for rid in result_id:
-        if not wq:
-            wq = Q(id=rid)
+        result_id = list(set(result_id))
+        wq = None
+        for rid in result_id:
+            if not wq:
+                wq = Q(id=rid)
+            else:
+                wq |= Q(id=rid)
+        if wq:
+            coms = Commodity.select().where(wq)
         else:
-            wq |= Q(id=rid)
-    if wq:
-        coms = Commodity.select().where(wq)
+            coms = []
     else:
-        coms = []
+        coms = Commodity.select()
+    category = int(request.args.get('c', '0'))
+    if category and category != 1:
+        coms = [c for c in coms if c.is_category(category)]
     return render_template('core/com_list.html', commodities=coms)
 
 

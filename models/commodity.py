@@ -53,6 +53,15 @@ class Commodity(db.Model):
         avg_rating = sum(ratings) * 1.0 / len(ratings)
         return round(avg_rating, 1)
 
+    def is_category(self, cat):
+        if cat == 1:
+            return True
+        c = self.category
+        while c.id != 1:
+            if c.id == cat:
+                return True
+            c = c.parent
+        return False
 
 class CommodityImage(db.Model):
 

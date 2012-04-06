@@ -11,6 +11,7 @@
   $("#new-stuff").load(url.get_new)
   function start_query() {
     var query = $("#search-commodity-input").val()
+    query += "&c=" + $("#cat-select").val() 
     window.location.href = url.get_result + query
   }
   $("#search-commodity-input").keydown(function(e) {

@@ -30,9 +30,9 @@
 !function($) {
   set_scroll_event(16, $("#result-nav"))  
   {% if query %}
-    $("#result-wrapper").load("{{url_for('core.search_commodity', q=query)}}")
+    $("#result-wrapper").load("{{url_for('core.search_commodity', q=query)}}&c={{cat}}")
   {% else %}
-    $("#result-wrapper").load("{{url_for('core.com_list')}}")
+    $("#result-wrapper").load("{{url_for('core.search_commodity')}}?c={{cat}}")
   {% endif %}
   $.get("{{url_for('core.com_filter_list')}}").done(function(data) {
     $("#result-nav ul").prepend(data)
@@ -44,9 +44,9 @@
     $("#result-wrapper").fadeOut(function() {
       var url = ""
       if (query == "") {
-        url = "{{url_for('core.com_list')}}" 
+        url = "{{url_for('core.search_commodity')}}?c=" + $("#cat-select").val() 
       } else {
-        url = "{{url_for('core.search_commodity')}}?q="+query
+        url = "{{url_for('core.search_commodity')}}?q="+query+"&c=" + $("#cat-select").val() 
       }
       $(this).load(url, function() {
         $(this).fadeIn()
