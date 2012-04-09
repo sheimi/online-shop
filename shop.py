@@ -4,19 +4,23 @@ from flask_peewee.db import Database
 from views.admin import Admin
 from views.rest import RestAPI, UserAuthentication
 from views.auth import Auth
+from settings import settings
 
 app = Flask(__name__)
 
 app.config.update(
     DEBUG=True,
-    SQLALCHEMY_DATABASE_URI='sqlite:///models/shop.db',
     SECRET_KEY='development key',
     DATABASE={
-        'name': 'models/shop.db',
-        'engine': 'peewee.SqliteDatabase',
+        'name': settings['database']['name'],
+        'engine': 'peewee.SqliteDatabase' if settings['database']['type'] == 'sqlite3' else None,
     },
-    INDEX_DIR='indexdir',
+    INDEX_DIR=settings['indexdir'],
 )
+
+app.jinja_env.globals['globals'] = {
+    'appname': settings['appname']
+}
 
 db = Database(app)
 auth = Auth(app, db)

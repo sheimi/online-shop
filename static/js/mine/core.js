@@ -82,3 +82,29 @@ Array.prototype.remove = function(from, to) {
     refresh_list[keyword]()
   }
 }(window)
+
+!function(window, $) {
+
+  function login_chatter(uname, uid) {
+    
+    if (window.chatview == undefined) {
+      $.getScript('http://localhost:8000/static/chat-view.js').done(function() {
+        setTimeout(function() { 
+          window.chatview = new $.chat_view({ 
+            user: {
+              uname: uname 
+              , uid: uid  
+            }   
+          })  
+          window.chatview.show()
+        }, 1000)
+      }).fail(function() {
+      })  
+    } else {
+      window.chatview.show()
+    }
+  }
+
+  window.login_chatter = login_chatter
+
+}(window, jQuery)
