@@ -18,7 +18,7 @@
 <script>
 !function(user) {
   user.id = {{user.id}}
-  login_chatter("{{user.username}}", {{user.id}})
+  login_chatter("{{globals.im_host}}", "{{user.username}}", {{user.id}})
 }(user)
 </script>
 {% if not user.admin %}

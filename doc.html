@@ -1,0 +1,36 @@
+<h1>网上商店文档</h1>
+
+<h2>安装依赖包</h2>
+
+<ul>
+<li>安装python</li>
+<li>安装setuptools和pip</li>
+<li>用pip安装依赖包，tornado（服务器），flask，peewee，flask_peewee, Whoosho+   设置settings.py文件</li>
+</ul>
+
+<h2>settings.py设置</h2>
+
+<ul>
+<li>appname: 商店名称，考虑到一些东西，商店名称放到设置文件中</li>
+<li>indexdir: 存放索引文件</li>
+<li>database: 设置数据库，为检查方便，用了sqlite，如果用mysql还要安装mysql的依赖包</li>
+<li>port: 服务器端口号</li>
+<li>im_host: 即时通讯的服务地址</li>
+<li>forum_host: BBS的服务地址</li>
+</ul>
+
+<h2>运行</h2>
+
+<ul>
+<li>python syncdb.py (产生数据库，为测试方便，带有生成随即数据)</li>
+<li>python build_index.py （生成商品索引，真实情况下定时运行）</li>
+<li>python shop.py （运行服务器）</li>
+</ul>
+
+<h2>实现功能</h2>
+
+<ul>
+<li>实现了所有的基本功能（如果没有记错的话）</li>
+<li>实现了7个红字标的附加功能（除发送商品信息外）</li>
+<li>实现了一个额外的附加功能，即时通讯（求加分）</li>
+</ul>

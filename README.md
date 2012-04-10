@@ -3,4 +3,5 @@ Online Shop
 
 Overview
 --------
-    It is a homework and implemented in python.
+
+It is a homework and implemented in python.

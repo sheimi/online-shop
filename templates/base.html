@@ -30,7 +30,7 @@
       {{ forms.bs_link('Index', icolor="black", itype="home", href=url_for('core.index'))}} 
     </li>
     <li>
-      {{ forms.bs_link('Forum', icolor="black", itype="comments", href='http://localhost:8000')}} 
+      {{ forms.bs_link('Forum', icolor="black", itype="comments", href=globals.forum_host')}} 
     </li>
   </ul>
   <div class="navbar-search pull-left">

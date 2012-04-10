@@ -19,7 +19,9 @@ app.config.update(
 )
 
 app.jinja_env.globals['globals'] = {
-    'appname': settings['appname']
+    'appname': settings['appname'],
+    'im_host': settings['im_host'],
+    'forum_host': settings['forum_host'],
 }
 
 db = Database(app)
@@ -73,6 +75,6 @@ if __name__ == '__main__':
     from tornado.httpserver import HTTPServer
     from tornado.ioloop import IOLoop
     http_server = HTTPServer(WSGIContainer(app))
-    http_server.listen(5000)
+    http_server.listen(settings['port'])
     IOLoop.instance().start()
     #app.run()

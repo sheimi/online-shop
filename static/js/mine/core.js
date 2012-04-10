@@ -85,10 +85,10 @@ Array.prototype.remove = function(from, to) {
 
 !function(window, $) {
 
-  function login_chatter(uname, uid) {
+  function login_chatter(im_host, uname, uid) {
     
     if (window.chatview == undefined) {
-      $.getScript('http://localhost:8000/static/chat-view.js').done(function() {
+      $.getScript('http://'+im_host+'/static/chat-view.js').done(function() {
         setTimeout(function() { 
           window.chatview = new $.chat_view({ 
             user: {
