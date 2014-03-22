@@ -6,6 +6,7 @@ from models.commodity import Commodity, CommodityComment
 from whoosh.index import create_in
 from whoosh.fields import TEXT, ID, Schema
 from shop import app
+import os
 
 
 def travel_commodity(writer):
@@ -27,6 +28,8 @@ def travel_comment(writer):
 
 
 if __name__ == '__main__':
+    if not os.path.isdir(app.config.get("INDEX_DIR")):
+        os.mkdir(app.config.get("INDEX_DIR"))
     schema = Schema(type=TEXT(stored=True),
                     id=ID(stored=True),
                     title=TEXT(stored=True),

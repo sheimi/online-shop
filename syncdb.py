@@ -47,15 +47,8 @@ def random_name(bit, bit_min=0, min_l=2, max_l=6):
 
 
 def random_img():
-    img = ['Fresh_Fruit_dessert_photo_JT002_350A1024768.jpg',
-           'Valentine-dessert2.jpg',
-           'Fruit_dessert_eastern.jpg',
-           'chocolate-fruit-n-nut-cases200812311.jpg',
-           'Ice_Cream_dessert_02.jpg',
-           'elegantlemonjellocreamdessertc2a9m-'
-           'jdemesterton8-29-201012-54-30pm.jpg',
-           'Summer_Fruit_Dessert.jpg',
-           'ua-chocolate-delight-dessert-1067.JPG']
+    img = ['d1.jpg',
+           'd2.jpg',]
     return random.choice(img)
 
 
